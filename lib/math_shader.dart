@@ -105,7 +105,7 @@ class MathCustomPainter extends CustomPainter {
           diagonalStripeColor,
           normalizedY,
         );
-        canvas.drawCircle(Offset(x, y), 1000,  paint);
+        canvas.drawCircle(Offset(x, y), 100,  paint);
       }
     }
   }
