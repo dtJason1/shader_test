@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
   final _controller = DiTreDiController(
     rotationX: -20,
     rotationY: 30,
-    light: vector.Vector3(3, 3,3),
+    light: vector.Vector3(3, 3, 3),
   );
 
   @override
@@ -37,6 +37,33 @@ class _MyAppState extends State<MyApp> {
             crossAxisAlignment: CrossAxisAlignment.start,
             direction: Axis.vertical,
             children: [
+              if (_displayMode == DisplayMode.cubes)
+                Expanded(
+                  child: DiTreDiDraggable(
+                    controller: _controller,
+                    child: DiTreDi(
+                      figures: _cubes.toList(),
+                      controller: _controller,
+                    ),
+                  ),
+                ),
+              if (_displayMode == DisplayMode.wireframe)
+                if (_displayMode == DisplayMode.points)
+                  Expanded(
+                    child: DiTreDiDraggable(
+                      controller: _controller,
+                      child: DiTreDi(
+                        figures: _points,
+                        controller: _controller,
+                        // disable z index to boost drawing performance
+                        // for wireframes and points
+                        config: const DiTreDiConfig(
+                          defaultPointWidth: 2,
+                          supportZIndex: false,
+                        ),
+                      ),
+                    ),
+                  ),
 
 
               FutureBuilder(future:  ObjParser().loadFromResources("lowpolytree.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
@@ -73,7 +100,7 @@ class _MyAppState extends State<MyApp> {
                     ),
                   );
 
-              }
+                }
 
 
 
