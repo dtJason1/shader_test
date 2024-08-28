@@ -78,7 +78,7 @@ class MathCustomPainter extends CustomPainter {
   double normalizeTrigonometricFunction(double value) => (value + 1) / 2;
 
   Color mix(Color x, Color y, double a) => Color.fromARGB(
-    255,
+    0,
     (y.red * a + x.red * (1 - a)).round(),
     (y.green * a + x.green * (1 - a)).round(),
     (y.blue * a + x.blue * (1 - a)).round(),
@@ -93,14 +93,14 @@ class MathCustomPainter extends CustomPainter {
       final double verticalStripe = normalizeTrigonometricFunction(sin(normalizedX * pi * scaleFactor + scaledTime));
       for (double y = 0; y < size.height; y++) {
         final double normalizedY = y / size.height;
-        final double horizontalStripe =
-        normalizeTrigonometricFunction(cos(normalizedY * pi * scaleFactor + scaledTime));
+        final double horizontalStripe = normalizeTrigonometricFunction(cos(normalizedY * pi * scaleFactor + scaledTime));
         final double diagonalStripe =
         normalizeTrigonometricFunction(sin((normalizedX + normalizedY) * pi * scaleFactor + scaledTime));
         final Color verticalStripeColor = Color.fromARGB(255, (255 * verticalStripe).round(), 0, 0);
         final Color horizontalStripeColor = Color.fromARGB(255, 0, (255 * horizontalStripe).round(), 0);
         final Color diagonalStripeColor = Color.fromARGB(255, 0, 0, (255 * diagonalStripe).round());
         paint.color = mix(
+
           mix(verticalStripeColor, horizontalStripeColor, normalizedX),
           diagonalStripeColor,
           normalizedY,

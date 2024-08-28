@@ -15,7 +15,7 @@ float normalizeTrigonometricFunction(float value) {
 
 void main() {
     vec2 pos = FlutterFragCoord().xy / resolution;
-    float scaledTime = time * TIME_SCALE;
+    float scaledTime = time;
     float verticalStripe = normalizeTrigonometricFunction(sin(pos.x * PI * SCALE_FACTOR + scaledTime));
     float horizontalStripe = normalizeTrigonometricFunction(cos(pos.y * PI * SCALE_FACTOR + scaledTime));
     float diagonalStripe = normalizeTrigonometricFunction(sin((pos.x + pos.y) * PI * SCALE_FACTOR + scaledTime));
