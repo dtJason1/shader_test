@@ -25,10 +25,12 @@ class _MyAppState extends State<MyApp> {
     obj.materials[0] = FSp3dMaterial.grey.deepCopy()
       ..strokeColor = const Color.fromARGB(255, 0, 0, 255);
     obj.rotate(Sp3dV3D(1, 1, 0).nor(), 30 * 3.14 / 180);
-    for(var i = 0; i < 10; i ++){
-      objs.add(obj);
+    objs.add(obj);
 
-    }
+    // for(var i = 0; i < 10; i ++){
+    //   objs.add(obj);
+    //
+    // }
     loadImage();
   }
 
@@ -61,16 +63,27 @@ class _MyAppState extends State<MyApp> {
           ),
           backgroundColor: const Color.fromARGB(255, 33, 33, 33),
           body: Column(
-            children: [
-              Sp3dRenderer(
+            children: List.generate(10, (index){
+              return Sp3dRenderer(
                 const Size(800, 800),
                 const Sp3dV2D(400, 400),
                 world,
                 // If you want to reduce distortion, shoot from a distance at high magnification.
                 Sp3dCamera(Sp3dV3D(0, 0, 3000), 6000),
                 Sp3dLight(Sp3dV3D(0, 0, -1), syncCam: true),
-              ),
-            ],
+              );
+            })
+
+            // [
+            //   Sp3dRenderer(
+            //     const Size(800, 800),
+            //     const Sp3dV2D(400, 400),
+            //     world,
+            //     // If you want to reduce distortion, shoot from a distance at high magnification.
+            //     Sp3dCamera(Sp3dV3D(0, 0, 3000), 6000),
+            //     Sp3dLight(Sp3dV3D(0, 0, -1), syncCam: true),
+            //   ),
+            // ],
 
           ),
         ),
