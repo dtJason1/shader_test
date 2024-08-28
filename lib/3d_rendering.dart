@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     // Create Sp3dObj.
-    Sp3dObj obj = UtilSp3dGeometry.cube(200, 200, 200, 4, 4, 4);
+    Sp3dObj obj = UtilSp3dGeometry.cube(1, 1, 1, 1, 1, 1);
     obj.materials.add(FSp3dMaterial.green.deepCopy());
     obj.fragments[0].faces[0].materialIndex = 1;
     obj.materials[0] = FSp3dMaterial.grey.deepCopy()
@@ -58,14 +58,17 @@ class _MyAppState extends State<MyApp> {
           ),
           backgroundColor: const Color.fromARGB(255, 33, 33, 33),
           body: Column(
-            children: List.generate(10, (index) => Sp3dRenderer(
-              const Size(200, 200),
-              const Sp3dV2D(100, 100),
-              world,
-              // If you want to reduce distortion, shoot from a distance at high magnification.
-              Sp3dCamera(Sp3dV3D(0, 0, 3000), 6000),
-              Sp3dLight(Sp3dV3D(0, 0, -1), syncCam: true),
-            ))
+            children: List.generate(10, (index){
+
+              return Sp3dRenderer(
+                const Size(20, 20),
+                const Sp3dV2D(20, 20),
+                world,
+                // If you want to reduce distortion, shoot from a distance at high magnification.
+                Sp3dCamera(Sp3dV3D(0, 0, 3000), 6000),
+                Sp3dLight(Sp3dV3D(0, 0, -1), syncCam: true),
+              );
+            } )
 
 
           ),
