@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
                   ),
 
 
-              FutureBuilder(future:  ObjParser().loadFromResources("lowpolytree.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
+              FutureBuilder(future:  ObjParser().loadFromResources("assets/lowpolytree.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
                 //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
                 if (snapshot.hasData == false) {
                   return Text("ERRORRRRR", style: TextStyle(fontSize: 30),);
@@ -91,8 +91,7 @@ class _MyAppState extends State<MyApp> {
                           Mesh3D( snapshot.data),
                         ],
                         controller: _controller,
-                        // disable z index to boost drawing performance
-                        // for wireframes and points
+
                         config: const DiTreDiConfig(
                           supportZIndex: true,
                         ),
