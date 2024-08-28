@@ -19,18 +19,18 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     // Create Sp3dObj.
-    Sp3dObj obj = UtilSp3dGeometry.cube(50, 50, 50, 4, 4, 4);
+    Sp3dObj obj = UtilSp3dGeometry.cube(2, 2, 2, 1, 1, 1);
     obj.materials.add(FSp3dMaterial.green.deepCopy());
     obj.fragments[0].faces[0].materialIndex = 1;
     obj.materials[0] = FSp3dMaterial.grey.deepCopy()
       ..strokeColor = const Color.fromARGB(255, 0, 0, 255);
     obj.rotate(Sp3dV3D(1, 1, 0).nor(), 30 * 3.14 / 180);
-    objs.add(obj);
+    // objs.add(obj);
 
-    // for(var i = 0; i < 10; i ++){
-    //   objs.add(obj);
-    //
-    // }
+    for(var i = 0; i < 100; i ++){
+      objs.add(obj);
+
+    }
     loadImage();
   }
 
