@@ -37,51 +37,98 @@ class _MyAppState extends State<MyApp> {
             crossAxisAlignment: CrossAxisAlignment.start,
             direction: Axis.vertical,
             children: [
-              FutureBuilder(
-                  future: ObjParser().loadFromResources("lowpolytree.obj"),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
-                    if (snapshot.hasData == false) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Error: Loading',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      );
-                    }
-                    //error가 발생하게 될 경우 반환하게 되는 부분
-                    else if (snapshot.hasError) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Error: ${snapshot.error}',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      );
-                    }
-                    // 데이터를 정상적으로 받아오게 되면 다음 부분을 실행하게 되는 것이다.
-                    else {
-                      return Expanded(
-                        child: DiTreDiDraggable(
-                          controller: _controller,
-                          child: DiTreDi(
-                            figures: [
-                              Mesh3D(snapshot.data),
+              if (_displayMode == DisplayMode.cubes)
+                Expanded(
+                  child: DiTreDiDraggable(
+                    controller: _controller,
+                    child: DiTreDi(
+                      figures: _cubes.toList(),
+                      controller: _controller,
+                    ),
+                  ),
+                ),
+              if (_displayMode == DisplayMode.wireframe)
+              if (_displayMode == DisplayMode.points)
+                Expanded(
+                  child: DiTreDiDraggable(
+                    controller: _controller,
+                    child: DiTreDi(
+                      figures: _points,
+                      controller: _controller,
+                      // disable z index to boost drawing performance
+                      // for wireframes and points
+                      config: const DiTreDiConfig(
+                        defaultPointWidth: 2,
+                        supportZIndex: false,
+                      ),
+                    ),
+                  ),
+                ),
 
-                            ],
-                            controller: _controller,
-                            // disable z index to boost drawing performance
-                            // for wireframes and points
-                            config: const DiTreDiConfig(
-                              supportZIndex: true,
-                            ),
-                          ),
-                        ),
-                      );
-                    }
-                  })
 
+              FutureBuilder(future:  ObjParser().loadFromResources("assets/lowpolytree.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
+                //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
+                if (snapshot.hasData == false) {
+                  return CircularProgressIndicator();
+                }
+                //error가 발생하게 될 경우 반환하게 되는 부분
+                else if (snapshot.hasError) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Error: ${snapshot.error}',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  );
+                }
+                // 데이터를 정상적으로 받아오게 되면 다음 부분을 실행하게 되는 것이다.
+                else {
+                  return  Expanded(
+                    child: DiTreDiDraggable(
+                      controller: _controller,
+                      child: DiTreDi(
+                        figures: [
+                          Mesh3D( snapshot.data),
+                        ],
+                        controller: _controller,
+                        // disable z index to boost drawing performance
+                        // for wireframes and points
+                        config: const DiTreDiConfig(
+                          supportZIndex: true,
+                        ),
+                      ),
+                    ),
+                  );
+
+              }
+
+
+
+              }),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text("Drag to rotate. Scroll to zoom"),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: DisplayMode.values
+                    .map((e) => Material(
+                  child: InkWell(
+                    onTap: () => setState(() => _displayMode = e),
+                    child: ListTile(
+                      title: Text(e.title),
+                      leading: Radio<DisplayMode>(
+                        value: e,
+                        groupValue: _displayMode,
+                        onChanged: (e) => setState(
+                              () => _displayMode = e ?? DisplayMode.cubes,
+                        ),
+                      ),
+                    ),
+                  ),
+                ))
+                    .toList(),
+              ),
             ],
           ),
         ),
