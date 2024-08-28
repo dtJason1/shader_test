@@ -57,14 +57,17 @@ class _MyAppState extends State<MyApp> {
                   return  Expanded(
                     child: DiTreDiDraggable(
                       controller: _controller,
-                      child: DiTreDi(
-                        figures: [
-                          Mesh3D( snapshot.data),
-                        ],
-                        controller: _controller,
+                      child: SizedBox(
+                        width: 500, height: 500,
+                        child: DiTreDi(
+                          figures: [
+                            Mesh3D( snapshot.data),
+                          ],
+                          controller: _controller,
 
-                        config: const DiTreDiConfig(
-                          supportZIndex: true,
+                          config: const DiTreDiConfig(
+                            supportZIndex: true,
+                          ),
                         ),
                       ),
                     ),
