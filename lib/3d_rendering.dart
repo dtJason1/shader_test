@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
     obj.rotate(Sp3dV3D(1, 1, 0).nor(), 30 * 3.14 / 180);
     // objs.add(obj);
 
-    for(var i = 0; i < 100; i ++){
+    for(var i = 0; i < 2500; i ++){
       objs.add(obj);
 
     }
