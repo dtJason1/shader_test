@@ -52,22 +52,18 @@ class _MyAppState extends State<MyApp> {
                     ),
                   );
                 }
-                // 데이터를 정상적으로 받아오게 되면 다음 부분을 실행하게 되는 것이다.
                 else {
                   return  Expanded(
                     child: DiTreDiDraggable(
                       controller: _controller,
-                      child: SizedBox(
-                        width: 500, height: 500,
-                        child: DiTreDi(
-                          figures: [
-                            Mesh3D( snapshot.data),
-                          ],
-                          controller: _controller,
+                      child: DiTreDi(
+                        figures: [
+                          Mesh3D( snapshot.data),
+                        ],
+                        controller: _controller,
 
-                          config: const DiTreDiConfig(
-                            supportZIndex: true,
-                          ),
+                        config: const DiTreDiConfig(
+                          supportZIndex: true,
                         ),
                       ),
                     ),
