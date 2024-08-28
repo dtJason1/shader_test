@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
           ),
           backgroundColor: const Color.fromARGB(255, 33, 33, 33),
           body: Column(
-            children: List.generate(10, (index){
+            children: List.generate(1033, (index){
               return Sp3dRenderer(
                 const Size(800, 800),
                 const Sp3dV2D(400, 400),
