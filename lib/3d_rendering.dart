@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
   final _controller = DiTreDiController(
     rotationX: -20,
     rotationY: 30,
-    light: vector.Vector3(-0.5, -0.5, 0.5),
+    light: vector.Vector3(0.7, 0.5,0.6),
   );
 
   @override
