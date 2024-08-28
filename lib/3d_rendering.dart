@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
   final _controller = DiTreDiController(
     rotationX: -20,
     rotationY: 30,
-    light: vector.Vector3(3, 3, 3),
+    light: vector.Vector3(2, 1, 1),
   );
 
   @override
@@ -37,73 +37,49 @@ class _MyAppState extends State<MyApp> {
             crossAxisAlignment: CrossAxisAlignment.start,
             direction: Axis.vertical,
             children: [
-              if (_displayMode == DisplayMode.cubes)
-                Expanded(
-                  child: DiTreDiDraggable(
-                    controller: _controller,
-                    child: DiTreDi(
-                      figures: _cubes.toList(),
-                      controller: _controller,
-                    ),
-                  ),
-                ),
-              if (_displayMode == DisplayMode.wireframe)
-                if (_displayMode == DisplayMode.points)
-                  Expanded(
-                    child: DiTreDiDraggable(
-                      controller: _controller,
-                      child: DiTreDi(
-                        figures: _points,
+
+              Container(
+                width: 500,
+                height: 500,
+                child: FutureBuilder(future:  ObjParser().loadFromResources("assets/face5764.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
+                  //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
+                  if (snapshot.hasData == false) {
+                    return Text("ERRORRRRR", style: TextStyle(fontSize: 30),);
+                  }
+                  //error가 발생하게 될 경우 반환하게 되는 부분
+                  else if (snapshot.hasError) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Error: ${snapshot.error}',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    );
+                  }
+                  // 데이터를 정상적으로 받아오게 되면 다음 부분을 실행하게 되는 것이다.
+                  else {
+                    return  Expanded(
+                      child: DiTreDiDraggable(
                         controller: _controller,
-                        // disable z index to boost drawing performance
-                        // for wireframes and points
-                        config: const DiTreDiConfig(
-                          defaultPointWidth: 2,
-                          supportZIndex: false,
+                        child: DiTreDi(
+                          figures: [
+                            Mesh3D( snapshot.data),
+                          ],
+                          controller: _controller,
+
+                          config: const DiTreDiConfig(
+                            supportZIndex: true,
+                          ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
 
-
-              FutureBuilder(future:  ObjParser().loadFromResources("assets/face5764.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
-                //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
-                if (snapshot.hasData == false) {
-                  return Text("ERRORRRRR", style: TextStyle(fontSize: 30),);
-                }
-                //error가 발생하게 될 경우 반환하게 되는 부분
-                else if (snapshot.hasError) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Error: ${snapshot.error}',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  );
-                }
-                // 데이터를 정상적으로 받아오게 되면 다음 부분을 실행하게 되는 것이다.
-                else {
-                  return  Expanded(
-                    child: DiTreDiDraggable(
-                      controller: _controller,
-                      child: DiTreDi(
-                        figures: [
-                          Mesh3D( snapshot.data),
-                        ],
-                        controller: _controller,
-
-                        config: const DiTreDiConfig(
-                          supportZIndex: true,
-                        ),
-                      ),
-                    ),
-                  );
-
-                }
+                  }
 
 
 
-              }),
+                }),
+              ),
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text("Drag to rotate. Scroll to zoom"),
