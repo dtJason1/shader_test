@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:simple_3d/simple_3d.dart';
 import 'package:util_simple_3d/util_simple_3d.dart';
 import 'package:simple_3d_renderer/simple_3d_renderer.dart';
+import 'package:ditredi/ditredi.dart';
+import 'package:vector_math/vector_math_64.dart' as vector;
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -11,83 +13,172 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late List<Sp3dObj> objs = [];
-  late Sp3dWorld world;
-  bool isLoaded = false;
+  var _displayMode = DisplayMode.cubes;
+  final _cubes = _generateCubes();
+  final _points = _generatePoints().toList();
 
-  @override
-  void initState() {
-    super.initState();
-    // Create Sp3dObj.
-    Sp3dObj obj = UtilSp3dGeometry.cube(30,30,30, 1, 1, 1);
-    obj.materials.add(FSp3dMaterial.green.deepCopy());
-    obj.fragments[0].faces[0].materialIndex = 1;
-    obj.materials[0] = FSp3dMaterial.grey.deepCopy()
-      ..strokeColor = const Color.fromARGB(255, 0, 0, 255);
-    obj.rotate(Sp3dV3D(1, 1, 0).nor(), 30 * 3.14 / 180);
-    // objs.add(obj);
-
-    for(var i = 0; i < 2500; i ++){
-      objs.add(obj);
-
-    }
-    loadImage();
-  }
-
-  void loadImage() async {
-    world = Sp3dWorld(objs);
-    world.initImages().then((List<Sp3dObj> errorObjs) {
-      setState(() {
-        isLoaded = true;
-      });
-    });
-  }
+  final _controller = DiTreDiController(
+    rotationX: -20,
+    rotationY: 30,
+    light: vector.Vector3(-0.5, -0.5, 0.5),
+  );
 
   @override
   Widget build(BuildContext context) {
-    if (!isLoaded) {
-      return MaterialApp(
-          title: 'Sp3dRenderer',
-          home: Scaffold(
-              appBar: AppBar(
-                backgroundColor: const Color.fromARGB(255, 0, 255, 0),
+    return MaterialApp(
+      darkTheme: ThemeData.dark(),
+      title: 'DiTreDi Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        body: SafeArea(
+          child: Flex(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            direction: Axis.vertical,
+            children: [
+              if (_displayMode == DisplayMode.cubes)
+                Expanded(
+                  child: DiTreDiDraggable(
+                    controller: _controller,
+                    child: DiTreDi(
+                      figures: _cubes.toList(),
+                      controller: _controller,
+                    ),
+                  ),
+                ),
+              if (_displayMode == DisplayMode.wireframe)
+                Expanded(
+                  child: DiTreDiDraggable(
+                    controller: _controller,
+                    child: DiTreDi(
+                      figures: [
+                        ..._cubes
+                            .map((e) => e.toLines())
+                            .flatten()
+                            .map((e) =>
+                            e.copyWith(color: Colors.red.withAlpha(20)))
+                            .toList()
+                      ],
+                      controller: _controller,
+                      // disable z index to boost drawing performance
+                      // for wireframes and points
+                      config: const DiTreDiConfig(
+                        supportZIndex: false,
+                      ),
+                    ),
+                  ),
+                ),
+              if (_displayMode == DisplayMode.points)
+                Expanded(
+                  child: DiTreDiDraggable(
+                    controller: _controller,
+                    child: DiTreDi(
+                      figures: _points,
+                      controller: _controller,
+                      // disable z index to boost drawing performance
+                      // for wireframes and points
+                      config: const DiTreDiConfig(
+                        defaultPointWidth: 2,
+                        supportZIndex: false,
+                      ),
+                    ),
+                  ),
+                ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text("Drag to rotate. Scroll to zoom"),
               ),
-              backgroundColor: const Color.fromARGB(255, 33, 33, 33),
-              body: Container()));
-    } else {
-      return MaterialApp(
-        title: 'Sp3dRenderer',
-        home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 0, 255, 0),
-          ),
-          backgroundColor: const Color.fromARGB(255, 33, 33, 33),
-          body: Column(
-            children: List.generate(1033, (index){
-              return Sp3dRenderer(
-                const Size(800, 800),
-                const Sp3dV2D(400, 400),
-                world,
-                // If you want to reduce distortion, shoot from a distance at high magnification.
-                Sp3dCamera(Sp3dV3D(0, 0, 3000), 6000),
-                Sp3dLight(Sp3dV3D(0, 0, -1), syncCam: true),
-              );
-            })
-
-            // [
-            //   Sp3dRenderer(
-            //     const Size(800, 800),
-            //     const Sp3dV2D(400, 400),
-            //     world,
-            //     // If you want to reduce distortion, shoot from a distance at high magnification.
-            //     Sp3dCamera(Sp3dV3D(0, 0, 3000), 6000),
-            //     Sp3dLight(Sp3dV3D(0, 0, -1), syncCam: true),
-            //   ),
-            // ],
-
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: DisplayMode.values
+                    .map((e) => Material(
+                  child: InkWell(
+                    onTap: () => setState(() => _displayMode = e),
+                    child: ListTile(
+                      title: Text(e.title),
+                      leading: Radio<DisplayMode>(
+                        value: e,
+                        groupValue: _displayMode,
+                        onChanged: (e) => setState(
+                              () => _displayMode = e ?? DisplayMode.cubes,
+                        ),
+                      ),
+                    ),
+                  ),
+                ))
+                    .toList(),
+              ),
+            ],
           ),
         ),
-      );
+      ),
+    );
+  }
+}
+
+
+Iterable<Cube3D> _generateCubes() sync* {
+  final colors = [
+    Colors.grey.shade200,
+    Colors.grey.shade300,
+    Colors.grey.shade400,
+    Colors.grey.shade500,
+    Colors.grey.shade600,
+    Colors.grey.shade700,
+    Colors.grey.shade800,
+    Colors.grey.shade900,
+  ];
+
+  const count = 8;
+  for (var x = count; x > 0; x--) {
+    for (var y = count; y > 0; y--) {
+      for (var z = count; z > 0; z--) {
+        yield Cube3D(
+          0.9,
+          vector.Vector3(
+            x.toDouble() * 2,
+            y.toDouble() * 2,
+            z.toDouble() * 2,
+          ),
+          color: colors[(colors.length - y) % colors.length],
+        );
+      }
+    }
+  }
+}
+
+Iterable<Point3D> _generatePoints() sync* {
+  for (var x = 0; x < 10; x++) {
+    for (var y = 0; y < 10; y++) {
+      for (var z = 0; z < 10; z++) {
+        yield Point3D(
+          vector.Vector3(
+            x.toDouble() * 2,
+            y.toDouble() * 2,
+            z.toDouble() * 2,
+          ),
+        );
+      }
+    }
+  }
+}
+
+enum DisplayMode {
+  cubes,
+  wireframe,
+  points,
+}
+
+extension DisplayModeTitle on DisplayMode {
+  String get title {
+    switch (this) {
+      case DisplayMode.cubes:
+        return "Cubes";
+      case DisplayMode.wireframe:
+        return "Wireframe";
+      case DisplayMode.points:
+        return "Points";
     }
   }
 }
