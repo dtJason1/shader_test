@@ -33,9 +33,8 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         body: SafeArea(
-          child: Flex(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            direction: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
 
               Container(
