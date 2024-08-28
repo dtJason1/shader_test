@@ -24,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) async{
     return MaterialApp(
       darkTheme: ThemeData.dark(),
       title: 'DiTreDi Demo',
@@ -42,7 +42,11 @@ class _MyAppState extends State<MyApp> {
                   child: DiTreDiDraggable(
                     controller: _controller,
                     child: DiTreDi(
-                      figures: _cubes.toList(),
+                      figures: [
+                        Mesh3D(await ObjParser().loadFromResources("assets/model.obj")),
+
+                      ],
+
                       controller: _controller,
                     ),
                   ),
@@ -53,18 +57,14 @@ class _MyAppState extends State<MyApp> {
                     controller: _controller,
                     child: DiTreDi(
                       figures: [
-                        ..._cubes
-                            .map((e) => e.toLines())
-                            .flatten()
-                            .map((e) =>
-                            e.copyWith(color: Colors.red.withAlpha(20)))
-                            .toList()
-                      ],
+                        Mesh3D(await ObjParser().loadFromResources("assets/model.obj")),
+
+                  ],
                       controller: _controller,
                       // disable z index to boost drawing performance
                       // for wireframes and points
                       config: const DiTreDiConfig(
-                        supportZIndex: false,
+                        supportZIndex: true,
                       ),
                     ),
                   ),
