@@ -1,6 +1,10 @@
 # Blender 3.6.2
 # www.blender.org
+mtllib lowpolytree.mtl
+
 o FinalBaseMesh
+usemtl Leaves
+
 v -1.314300 15.068600 -1.645801
 v -1.457500 15.113700 -1.591601
 v -1.368800 15.215600 -1.666901
