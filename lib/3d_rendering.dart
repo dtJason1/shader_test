@@ -33,57 +33,55 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         body: SafeArea(
-          child: Column(
+          child: Flex(
             crossAxisAlignment: CrossAxisAlignment.center,
+            direction: Axis.vertical,
             children: [
 
-              Container(
-                width: 500,
-                height: 500,
-                child: FutureBuilder(future:  ObjParser().loadFromResources("assets/face5764.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
-                  //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
-                  if (snapshot.hasData == false) {
-                    return Text("ERRORRRRR", style: TextStyle(fontSize: 30),);
-                  }
-                  //error가 발생하게 될 경우 반환하게 되는 부분
-                  else if (snapshot.hasError) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Error: ${snapshot.error}',
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    );
-                  }
-                  // 데이터를 정상적으로 받아오게 되면 다음 부분을 실행하게 되는 것이다.
-                  else {
-                    return  Expanded(
-                      child: DiTreDiDraggable(
+              FutureBuilder(future:  ObjParser().loadFromResources("assets/face5764.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
+                //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
+                if (snapshot.hasData == false) {
+                  return Text("ERRORRRRR", style: TextStyle(fontSize: 30),);
+                }
+                //error가 발생하게 될 경우 반환하게 되는 부분
+                else if (snapshot.hasError) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Error: ${snapshot.error}',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  );
+                }
+                // 데이터를 정상적으로 받아오게 되면 다음 부분을 실행하게 되는 것이다.
+                else {
+                  return  Expanded(
+                    child: DiTreDiDraggable(
+                      controller: _controller,
+                      child: DiTreDi(
+                        figures: [
+                          Mesh3D( snapshot.data),
+                        ],
                         controller: _controller,
-                        child: DiTreDi(
-                          figures: [
-                            Mesh3D( snapshot.data),
-                          ],
-                          controller: _controller,
 
-                          config: const DiTreDiConfig(
-                            supportZIndex: true,
-                          ),
+                        config: const DiTreDiConfig(
+                          supportZIndex: true,
                         ),
                       ),
-                    );
+                    ),
+                  );
 
-                  }
+                }
 
 
 
-                }),
-              ),
+              }),
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text("Drag to rotate. Scroll to zoom"),
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: DisplayMode.values
                     .map((e) => Material(
