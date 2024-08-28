@@ -37,36 +37,9 @@ class _MyAppState extends State<MyApp> {
             crossAxisAlignment: CrossAxisAlignment.start,
             direction: Axis.vertical,
             children: [
-              // if (_displayMode == DisplayMode.cubes)
-              //   Expanded(
-              //     child: DiTreDiDraggable(
-              //       controller: _controller,
-              //       child: DiTreDi(
-              //         figures: _cubes.toList(),
-              //         controller: _controller,
-              //       ),
-              //     ),
-              //   ),
-              // if (_displayMode == DisplayMode.wireframe)
-              // if (_displayMode == DisplayMode.points)
-              //   Expanded(
-              //     child: DiTreDiDraggable(
-              //       controller: _controller,
-              //       child: DiTreDi(
-              //         figures: _points,
-              //         controller: _controller,
-              //         // disable z index to boost drawing performance
-              //         // for wireframes and points
-              //         config: const DiTreDiConfig(
-              //           defaultPointWidth: 2,
-              //           supportZIndex: false,
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              //
 
-              FutureBuilder(future:  ObjParser().loadFromResources("assets/lowpolytree.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
+
+              FutureBuilder(future:  ObjParser().loadFromResources("face5764.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
                 //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
                 if (snapshot.hasData == false) {
                   return CircularProgressIndicator();
