@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
 
   final _controller = DiTreDiController(
 
-    light: vector.Vector3(3, 3, 3),
+    light: vector.Vector3(5, 5, 5),
   );
 
   @override
