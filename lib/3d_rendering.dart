@@ -18,9 +18,8 @@ class _MyAppState extends State<MyApp> {
   final _points = _generatePoints().toList();
 
   final _controller = DiTreDiController(
-    rotationX: -20,
-    rotationY: 30,
-    light: vector.Vector3(2, 1, 1),
+
+    light: vector.Vector3(0, 0, 0),
   );
 
   @override
