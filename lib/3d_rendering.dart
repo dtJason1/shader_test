@@ -58,18 +58,16 @@ class _MyAppState extends State<MyApp> {
           ),
           backgroundColor: const Color.fromARGB(255, 33, 33, 33),
           body: Column(
-            children: List.generate(10, (index){
-
-              return Sp3dRenderer(
+            children: [
+              Sp3dRenderer(
                 const Size(800, 800),
                 const Sp3dV2D(400, 400),
                 world,
                 // If you want to reduce distortion, shoot from a distance at high magnification.
                 Sp3dCamera(Sp3dV3D(0, 0, 3000), 6000),
                 Sp3dLight(Sp3dV3D(0, 0, -1), syncCam: true),
-              );
-            } )
-
+              ),
+            ],
 
           ),
         ),
