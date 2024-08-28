@@ -25,7 +25,10 @@ class _MyAppState extends State<MyApp> {
     obj.materials[0] = FSp3dMaterial.grey.deepCopy()
       ..strokeColor = const Color.fromARGB(255, 0, 0, 255);
     obj.rotate(Sp3dV3D(1, 1, 0).nor(), 30 * 3.14 / 180);
-    objs.add(obj);
+    for(var i = 0; i < 10; i ++){
+      objs.add(obj);
+
+    }
     loadImage();
   }
 
