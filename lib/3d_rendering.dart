@@ -58,10 +58,9 @@ class _MyAppState extends State<MyApp> {
                       controller: _controller,
                       child: DiTreDi(
                         figures: [
-                          Mesh3D( snapshot.data),
+                          Mesh3D(snapshot.data),
                         ],
                         controller: _controller,
-
                         config: const DiTreDiConfig(
                           supportZIndex: true,
                         ),
