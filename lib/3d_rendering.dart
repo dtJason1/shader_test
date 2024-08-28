@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
                   ),
 
 
-              FutureBuilder(future:  ObjParser().loadFromResources("assets/lowpolytree.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
+              FutureBuilder(future:  ObjParser().loadFromResources("assets/face5764.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
                 //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
                 if (snapshot.hasData == false) {
                   return Text("ERRORRRRR", style: TextStyle(fontSize: 30),);
