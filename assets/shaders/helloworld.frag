@@ -70,7 +70,7 @@ void main() {
 
     st = tile(st,1.0);
     st = rotate2D(st,-PI*time*0.0001);
-    st = rotateTilePattern(st*1);
+    st = rotateTilePattern(st*2.);
     st = rotate2D(st,PI*time*0.0001);
 
     fragColor = vec4(vec3(step(st.x,st.y)),1.0);
