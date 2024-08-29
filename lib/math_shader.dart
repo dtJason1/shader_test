@@ -38,7 +38,7 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
   Widget build(BuildContext context){
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(90,50,0,0),
+        padding: const EdgeInsets.fromLTRB(75,25,0,0),
         child: Stack(
           children: [
             Container(
