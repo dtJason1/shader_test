@@ -31,13 +31,10 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        body: SafeArea(
-          child: Flex(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            direction: Axis.vertical,
-            children: [
+        body:
 
-              FutureBuilder(future:  ObjParser().loadFromResources("assets/lowpolytree.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
+            Center(
+              child: FutureBuilder(future:  ObjParser().loadFromResources("assets/lowpolytree.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
                 if (snapshot.hasData == false) {
                   return Text("ERRORRRRR", style: TextStyle(fontSize: 30),);
                 }
@@ -71,34 +68,8 @@ class _MyAppState extends State<MyApp> {
 
 
               }),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text("Drag to rotate. Scroll to zoom"),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: DisplayMode.values
-                    .map((e) => Material(
-                  child: InkWell(
-                    onTap: () => setState(() => _displayMode = e),
-                    child: ListTile(
-                      title: Text(e.title),
-                      leading: Radio<DisplayMode>(
-                        value: e,
-                        groupValue: _displayMode,
-                        onChanged: (e) => setState(
-                              () => _displayMode = e ?? DisplayMode.cubes,
-                        ),
-                      ),
-                    ),
-                  ),
-                ))
-                    .toList(),
-              ),
-            ],
-          ),
-        ),
+            ),
+
       ),
     );
   }
