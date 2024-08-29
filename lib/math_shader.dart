@@ -22,6 +22,7 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
     super.initState();
     _ticker = createTicker((Duration elapsed) {
       setState(() {
+        print(_currentTime);
         _currentTime = elapsed;
       });
     });
@@ -67,49 +68,49 @@ class MathShaderPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
 
-class MathCustomPainter extends CustomPainter {
-  static const double scaleFactor = 8;
-  static const double timeScale = 0.005;
-
-  final Duration currentTime;
-
-  MathCustomPainter(this.currentTime);
-
-  double normalizeTrigonometricFunction(double value) => (value + 1) / 2;
-
-  Color mix(Color x, Color y, double a) => Color.fromARGB(
-    0,
-    (y.red * a + x.red * (1 - a)).round(),
-    (y.green * a + x.green * (1 - a)).round(),
-    (y.blue * a + x.blue * (1 - a)).round(),
-  );
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint();
-    final double scaledTime = currentTime.inMilliseconds.toDouble() * timeScale;
-    for (double x = 0; x < size.width; x++) {
-      final double normalizedX = x / size.width;
-      final double verticalStripe = normalizeTrigonometricFunction(sin(normalizedX * pi * scaleFactor + scaledTime));
-      for (double y = 0; y < size.height; y++) {
-        final double normalizedY = y / size.height;
-        final double horizontalStripe = normalizeTrigonometricFunction(cos(normalizedY * pi * scaleFactor + scaledTime));
-        final double diagonalStripe =
-        normalizeTrigonometricFunction(sin((normalizedX + normalizedY) * pi * scaleFactor + scaledTime));
-        final Color verticalStripeColor = Color.fromARGB(255, (255 * verticalStripe).round(), 0, 0);
-        final Color horizontalStripeColor = Color.fromARGB(255, 0, (255 * horizontalStripe).round(), 0);
-        final Color diagonalStripeColor = Color.fromARGB(255, 0, 0, (255 * diagonalStripe).round());
-        paint.color = mix(
-
-          mix(verticalStripeColor, horizontalStripeColor, normalizedX),
-          diagonalStripeColor,
-          normalizedY,
-        );
-        canvas.drawCircle(Offset(x, y), 100,  paint);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
-}
+// class MathCustomPainter extends CustomPainter {
+//   static const double scaleFactor = 8;
+//   static const double timeScale = 0.005;
+//
+//   final Duration currentTime;
+//
+//   MathCustomPainter(this.currentTime);
+//
+//   double normalizeTrigonometricFunction(double value) => (value + 1) / 2;
+//
+//   Color mix(Color x, Color y, double a) => Color.fromARGB(
+//     0,
+//     (y.red * a + x.red * (1 - a)).round(),
+//     (y.green * a + x.green * (1 - a)).round(),
+//     (y.blue * a + x.blue * (1 - a)).round(),
+//   );
+//
+//   @override
+//   void paint(Canvas canvas, Size size) {
+//     final Paint paint = Paint();
+//     final double scaledTime = currentTime.inMilliseconds.toDouble() * timeScale;
+//     for (double x = 0; x < size.width; x++) {
+//       final double normalizedX = x / size.width;
+//       final double verticalStripe = normalizeTrigonometricFunction(sin(normalizedX * pi * scaleFactor + scaledTime));
+//       for (double y = 0; y < size.height; y++) {
+//         final double normalizedY = y / size.height;
+//         final double horizontalStripe = normalizeTrigonometricFunction(cos(normalizedY * pi * scaleFactor + scaledTime));
+//         final double diagonalStripe =
+//         normalizeTrigonometricFunction(sin((normalizedX + normalizedY) * pi * scaleFactor + scaledTime));
+//         final Color verticalStripeColor = Color.fromARGB(255, (255 * verticalStripe).round(), 0, 0);
+//         final Color horizontalStripeColor = Color.fromARGB(255, 0, (255 * horizontalStripe).round(), 0);
+//         final Color diagonalStripeColor = Color.fromARGB(255, 0, 0, (255 * diagonalStripe).round());
+//         paint.color = mix(
+//
+//           mix(verticalStripeColor, horizontalStripeColor, normalizedX),
+//           diagonalStripeColor,
+//           normalizedY,
+//         );
+//         canvas.drawCircle(Offset(x, y), 100,  paint);
+//       }
+//     }
+//   }
+//
+//   @override
+//   bool shouldRepaint(CustomPainter oldDelegate) => true;
+// }
