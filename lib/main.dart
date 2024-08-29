@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'math_shader.dart';
 import '3d_rendering.dart';
+import 'o3d.dart';
 void main() {
-  runApp(const MyApp());
+  runApp( MyO3DApp());
 }
 
 class myApp extends StatelessWidget {

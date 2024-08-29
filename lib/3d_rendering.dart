@@ -4,6 +4,7 @@ import 'package:util_simple_3d/util_simple_3d.dart';
 import 'package:simple_3d_renderer/simple_3d_renderer.dart';
 import 'package:ditredi/ditredi.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
+import 'package:o3d/o3d.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -40,7 +41,8 @@ class _MyAppState extends State<MyApp> {
                 child: Flex(
                   direction: Axis.vertical,
                   children: [
-                    FutureBuilder(future:  ObjParser().loadFromResources("assets/lowpolytree.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
+                    FutureBuilder(future:  ObjParser().loadFromResources("lowpolytree.obj"),
+                        builder: (BuildContext context, AsyncSnapshot snapshot ){
                       if (snapshot.hasData == false) {
                         return Text("ERRORRRRR", style: TextStyle(fontSize: 30),);
                       }
