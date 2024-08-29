@@ -34,40 +34,45 @@ class _MyAppState extends State<MyApp> {
         body:
 
             Center(
-              child: FutureBuilder(future:  ObjParser().loadFromResources("assets/lowpolytree.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
-                if (snapshot.hasData == false) {
-                  return Text("ERRORRRRR", style: TextStyle(fontSize: 30),);
-                }
-                else if (snapshot.hasError) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Error: ${snapshot.error}',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  );
-                }
-                else {
-                  return  Expanded(
-                    child: DiTreDiDraggable(
-                      controller: _controller,
-                      child: DiTreDi(
-                        figures: [
-                          Mesh3D(snapshot.data),
-                        ],
-                        controller: _controller,
-                        config: const DiTreDiConfig(
-                          supportZIndex: true,
+              child: Flex(
+                direction: Axis.vertical,
+                children: [
+                  FutureBuilder(future:  ObjParser().loadFromResources("assets/lowpolytree.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
+                    if (snapshot.hasData == false) {
+                      return Text("ERRORRRRR", style: TextStyle(fontSize: 30),);
+                    }
+                    else if (snapshot.hasError) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Error: ${snapshot.error}',
+                          style: TextStyle(fontSize: 15),
                         ),
-                      ),
-                    ),
-                  );
+                      );
+                    }
+                    else {
+                      return  Expanded(
+                        child: DiTreDiDraggable(
+                          controller: _controller,
+                          child: DiTreDi(
+                            figures: [
+                              Mesh3D(snapshot.data),
+                            ],
+                            controller: _controller,
+                            config: const DiTreDiConfig(
+                              supportZIndex: true,
+                            ),
+                          ),
+                        ),
+                      );
 
-                }
+                    }
 
 
 
-              }),
+                  }),
+                ],
+              ),
             ),
 
       ),
