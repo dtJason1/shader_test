@@ -37,12 +37,10 @@ class _MyAppState extends State<MyApp> {
             direction: Axis.vertical,
             children: [
 
-              FutureBuilder(future:  ObjParser().loadFromResources("assets/face5764.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
-                //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
+              FutureBuilder(future:  ObjParser().loadFromResources("assets/lowpolytree.obj"), builder: (BuildContext context, AsyncSnapshot snapshot ){
                 if (snapshot.hasData == false) {
                   return Text("ERRORRRRR", style: TextStyle(fontSize: 30),);
                 }
-                //error가 발생하게 될 경우 반환하게 되는 부분
                 else if (snapshot.hasError) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
