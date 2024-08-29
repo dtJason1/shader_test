@@ -35,14 +35,32 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
   }
 
   @override
-  Widget build(BuildContext context) => ShaderBuilder(
-    assetKey: 'assets/shaders/helloworld.frag',
-        (BuildContext context, FragmentShader shader, _) => CustomPaint(
-      size: MediaQuery.of(context).size,
-      painter: MathShaderPainter(shader, _currentTime),
-      // painter: MathCustomPainter(_currentTime),
-    ),
-  );
+  Widget build(BuildContext context){
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(200,200,0,0),
+        child: Stack(
+          children: [
+            Container(
+              width: 800,
+              height: 800,
+              child: ShaderBuilder(
+                assetKey: 'assets/shaders/helloworld.frag',
+                    (BuildContext context, FragmentShader shader, _) => CustomPaint(
+                  size: MediaQuery.of(context).size,
+                  painter: MathShaderPainter(shader, _currentTime),
+                  // painter: MathCustomPainter(_currentTime),
+                ),
+
+                child: Text("hello world", style: TextStyle(color: Colors.red),),
+              ),
+            ),
+            Text("hello", style: TextStyle(color: Colors.red),),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class MathShaderPainter extends CustomPainter {
