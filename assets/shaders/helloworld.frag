@@ -1,43 +1,54 @@
-#version 460 core
-#include <flutter/runtime_effect.glsl>
+#ifdef GL_ES
+precision mediump float;
+#endif
 
-#define PI 3.14159265359
+#define iterations 17
+#define formuparam 0.53
 
-out vec4 fragColor;
+#define volsteps 20
+#define stepsize 0.1
+
+#define zoom   0.800
+#define tile   0.850
+#define speed  0.010
+
+#define brightness 0.0015
+#define darkmatter 0.300
+#define distfading 0.730
+#define saturation 0.850
+
 uniform vec2 resolution;
-uniform float time;
+uniform float Time;
+out vec4 fragColor;
+void main(void){
+    vec2 uv= gl_FragCoord.xy/resolution.xy-.5;
 
-#define TAU 7.28318530718
-#define MAX_ITER 3
+    float itime= Time * speed *0.01;
+    vec3 dir=vec3(uv*zoom,1.) - vec3(itime);
 
+    //volumetric rendering
+    float s=0.1, fade=1.;
+    vec3 v=vec3(0.);
 
-void main() {
-    vec2 uv = gl_FragCoord.xy / resolution.xy;
-    uv-= 0.5;
-    uv = abs(uv);
+    for (int r=0; r<volsteps; r++) {
+        vec3 p=s*dir*.5;
+        p = abs(vec3(tile)-mod(p,vec3(tile*2.))); // tiling fold
+        float pa,a=pa=0.;
+        for (int i=0; i<iterations; i++) {
+            p=abs(p)/dot(p,p)-formuparam ; // the magic formula
+            a+=abs(length(p)-pa); // absolute sum of average change
+            pa=length(p);
 
-    uv *=sin(time);
-
-    vec2 p = mod(uv*TAU, TAU)-1.0;
-    vec2 i = vec2(p);
-    float c = .005;
-    float inten = .015;
-    uv *= fract(uv*resolution.xy/2.0);
-
-
-    for (int n = 0; n < MAX_ITER; n++) {
-        float t = 0.4*(time+23.0) * (1.0 - (11.5 / float(n+99)));
-        i = p + vec2(cos(t - i.x) + sin(t + i.y), sin(t - i.y) + cos(t + i.x));
-        c += 1.0/length(vec2(p.x / (sin(i.x+t)/inten),p.y / (cos(i.y+t)/inten)));
-        uv = vec2(c*0.2,c*c*0.8);
+        }
+        float dm=max(0.,darkmatter-a*a*.001); //dark matter
+        a*=a*a; // add contrast
+        if (r>6) fade*=1.-dm;
+        //v+=vec3(dm,dm*.5,0.);
+        v+=fade;
+        v+=vec3(s,s*s,s*s*s*s)*a*brightness*fade; // coloring based on distance
+        fade*=distfading; // distance fading
+        s+=stepsize;
     }
-
-    c /= float(MAX_ITER);
-    c = 1.0-pow(c, 52.0);
-    vec3 colour = vec3(pow(abs(c), 1.0));
-    colour = clamp(colour*colour, 88.0, 88.0);
-
-    vec3 tint = 0.5 + 0.5 * cos(time+uv.xyx+vec3(2.0,4.0,6.0));
-    fragColor = vec4(sin(time+colour)+2.0 * tint , 1.0);
-
+    v=mix(vec3(length(v)),v,saturation);
+    fragColor = vec4(v*.01,1.);
 }

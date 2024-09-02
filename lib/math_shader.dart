@@ -79,9 +79,10 @@ class MathShaderPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    shader.setFloat(0, size.width);
-    shader.setFloat(1, size.height);
-    shader.setFloat(2, currentTime.inMicroseconds.toDouble()*0.000001);
+    shader.setFloat(0, size.width );
+    shader.setFloat(1, size.height );
+
+    shader.setFloat(2, currentTime.inMicroseconds.toDouble()*0.00011);
     final Paint paint = Paint()..shader = shader;
     canvas.drawRect(Offset.zero & size, paint);
   }
