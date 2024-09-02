@@ -52,7 +52,12 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
                   // painter: MathCustomPainter(_currentTime),
                 ),
 
-                child: Text("hello world", style: TextStyle(color: Colors.red),),
+                child: Column(
+                  children: [
+                    Text("hello world", style: TextStyle(color: Colors.red),),
+                  ],
+                ),
+
               ),
             ),
             Text("hello", style: TextStyle(color: Colors.red),),
@@ -76,7 +81,7 @@ class MathShaderPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     shader.setFloat(0, size.width);
     shader.setFloat(1, size.height);
-    shader.setFloat(2, currentTime.inMilliseconds.toDouble());
+    shader.setFloat(2, currentTime.inMicroseconds.toDouble()*0.000001);
     final Paint paint = Paint()..shader = shader;
     canvas.drawRect(Offset.zero & size, paint);
   }
