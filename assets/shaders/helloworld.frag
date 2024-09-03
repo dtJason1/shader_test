@@ -42,6 +42,8 @@ void main() {
     float t = 1.0;
     float tt = 1.0;
 
+    vec3 ip = pos + dir * t;
+
 
     fragColor.a = 1.0 / (t * t * t * t);
 
