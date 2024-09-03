@@ -39,16 +39,9 @@ void main() {
     dir.xz = rot(dir.xz, time * 0.2);dir = dir.yzx;
     vec3 pos = vec3(0, 0, time);
     vec3 col = vec3(0.0);
-    float t = 0.0;
-    float tt = 0.0;
-    for(int i = 0 ; i < 10; i++) {
-        tt = map(pos + dir * t);
-        if(tt < 0.001) break;
-        t += tt * 0.45;
-    }
-    vec3 ip = pos + dir * t;
-    col = vec3(t * 0.1);
-    col = sqrt(col);
+    float t = 1.0;
+    float tt = 1.0;
+
 
     fragColor.a = 1.0 / (t * t * t * t);
 
