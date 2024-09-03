@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_shaders/flutter_shaders.dart';
@@ -16,10 +17,13 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
   late Ticker _ticker;
 
   Duration _currentTime = Duration.zero;
-
+  late double _width, _height;
   @override
   void initState() {
+
     super.initState();
+
+
     _ticker = createTicker((Duration elapsed) {
       setState(() {
         _currentTime = elapsed;
@@ -34,6 +38,8 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
     super.dispose();
   }
 
+
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -41,9 +47,9 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
         padding: const EdgeInsets.fromLTRB(70,0,0,0),
         child: Stack(
           children: [
-            Container(
-              width: 800,
-              height: 800,
+            SizedBox(
+              width: Image.asset("assets/person.jpg").width,
+              height: Image.asset("assets/person.jpg").height,
               child: ShaderBuilder(
                 assetKey: 'assets/shaders/helloworld.frag',
                     (BuildContext context, FragmentShader shader, _) => CustomPaint(
@@ -79,8 +85,8 @@ class MathShaderPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    shader.setFloat(0, size.width );
-    shader.setFloat(1, size.height );
+    shader.setFloat(0,800);
+    shader.setFloat(1, 100 );
 
     shader.setFloat(2, currentTime.inMicroseconds.toDouble()*0.00011);
     final Paint paint = Paint()..shader = shader;
