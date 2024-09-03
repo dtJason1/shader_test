@@ -48,8 +48,8 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
         child: Stack(
           children: [
             SizedBox(
-              width: Image.asset("assets/person.jpg").width,
-              height: Image.asset("assets/person.jpg").height,
+              width: 800,
+              height:800,
               child: ShaderBuilder(
                 assetKey: 'assets/shaders/helloworld.frag',
                     (BuildContext context, FragmentShader shader, _) => CustomPaint(
