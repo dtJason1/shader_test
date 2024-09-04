@@ -1,11 +1,12 @@
 import 'dart:math';
 import 'dart:ui';
+import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_shaders/flutter_shaders.dart';
-import 'package:show_fps/show_fps.dart';
+
 
 class MathShaderWidget extends StatefulWidget {
   const MathShaderWidget({super.key});
@@ -18,34 +19,10 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
   late Ticker _ticker;
 
   Duration _currentTime = Duration.zero;
-
-  final random = Random();
-  final stopwatch = Stopwatch();
-  int throttledFramesCount = 0;
-
-  void throttle() {
-    stopwatch.start();
-
-    int duration = random.nextInt(30) + 10;
-
-    while (stopwatch.elapsedMilliseconds < duration) {}
-    stopwatch.reset();
-    stopwatch.stop();
-
-    if (throttledFramesCount > 7) {
-      throttledFramesCount = 0;
-      return;
-    }
-
-    throttledFramesCount++;
-
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      throttle();
-    });
-  }
-
-
   late double _width, _height;
+  bool _shouldCount = false;
+  var _count = 0;
+
   @override
   void initState() {
 
@@ -67,9 +44,10 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
   }
 
 
-
   @override
   Widget build(BuildContext context){
+    if (_shouldCount) _count++;
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.fromLTRB(70,0,0,0),
@@ -94,7 +72,24 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
 
               ),
             ),
-            Text("hello", style: TextStyle(color: Colors.red),),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(100, 50,0,0),
+              child: ElevatedButton(
+                onPressed: () {
+                  _shouldCount = true;
+                  _count = 0;
+                  Timer.periodic(Duration(milliseconds: 1),(timer) {
+                    setState(() {
+                      if (timer.tick >= 1000) {
+                        timer.cancel();
+                        _shouldCount = false;
+                      }
+                    });
+                  });
+                },
+                child: Text(_count != 0 ? 'FPS: $_count' : 'START'),
+              ),
+            ),
           ],
         ),
       ),
