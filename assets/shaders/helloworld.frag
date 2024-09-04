@@ -63,7 +63,6 @@ void main()
     for(float i=COUNT; i>=0.; i-=1.){
         float edge = simplex_noise(vec3(uv * vec2(2., 0.) + vec2(0, t + i*.15), 1.))*.2 + (.5/COUNT)*i + .25;
         float mi = SS(edge, uv.y) ;
-        m *= SS(edge, uv.y+.015);
         m += mi;
 
         if(mi > 0.){
