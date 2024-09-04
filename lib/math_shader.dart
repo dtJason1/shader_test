@@ -29,11 +29,17 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
     super.initState();
 
 
-
+    _ticker = createTicker((Duration elapsed) {
+      setState(() {
+        _currentTime = elapsed;
+      });
+    });
+    _ticker.start();
   }
 
   @override
   void dispose() {
+    _ticker.dispose();
     super.dispose();
   }
 
