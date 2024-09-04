@@ -3,7 +3,7 @@ precision mediump float;
 
 uniform vec2 u_resolution; // 화면 해상도
 uniform float u_time;      // 시간
-#define COUNT 10.
+#define COUNT 3.
 #define COL_BLACK vec3(23,32,38) / 255.0
 
 #define SF 1./min(u_resolution.x,u_resolution.y)
@@ -60,20 +60,20 @@ void main()
     vec3 col;
 
 
-    float edge = simplex_noise(vec3(uv * vec2(2., 0.) + vec2(0, t + COUNT*.15), 1.))*.2 + (.5/COUNT)*COUNT + .25;
-    float anotherEdge = simplex_noise(vec3(uv * vec2(2., 0.) + vec2(0, t + COUNT*.15), 1.))*.2 + (.5/COUNT)*COUNT + .25;
-
-    float mi = SS(edge, uv.y) - SS((edge + SS(anotherEdge, uv.y))+0.005, uv.y);
-
-    for ( float i =0; i< COUNT; i++){
+    for(float i=COUNT; i>=0.; i-=1.){
+        float edge = simplex_noise(vec3(uv * vec2(2., 0.) + vec2(0, t + i*.15), 1.))*.2 + (.5/COUNT)*i + .25;
+        float mi = SS(edge, uv.y) ;
         m *= SS(edge, uv.y+.015);
         m += mi;
 
+        if(mi > 0.){
+            col = hue(i/COUNT).rgb;
+        }
     }
 
+    col = mix(COL_BLACK, col, m);
 
-
-    col = hue(0.5).rgb;
+    col = hue(0.6).rgb;
 
 
 

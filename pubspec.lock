@@ -136,6 +136,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  lemberfpsmonitor:
+    dependency: "direct main"
+    description:
+      name: lemberfpsmonitor
+      sha256: "2ffe1dc0e7902a8890639ce6a9e0088d62a7596708213ee11ccc047e6d437759"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3+6"
   lints:
     dependency: transitive
     description:
@@ -200,14 +208,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-  show_fps:
-    dependency: "direct main"
-    description:
-      name: show_fps
-      sha256: "398124dd74456ad92fbb791cd6dd1018b5ced5ac3b9d0b401ab8c0e035ac9920"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.6"
   simple_3d:
     dependency: transitive
     description:

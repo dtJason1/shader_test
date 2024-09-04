@@ -34,6 +34,7 @@ dependencies:
   simple_3d_renderer: ^20.0.2
   ditredi: ^2.0.2
   o3d: ^1.1.1
+  lemberfpsmonitor: ^0.0.3+6
 
 
 
