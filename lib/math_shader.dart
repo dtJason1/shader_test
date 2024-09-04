@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_shaders/flutter_shaders.dart';
+import 'package:show_fps/show_fps.dart';
 
 class MathShaderWidget extends StatefulWidget {
   const MathShaderWidget({super.key});
@@ -17,6 +18,33 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
   late Ticker _ticker;
 
   Duration _currentTime = Duration.zero;
+
+  final random = Random();
+  final stopwatch = Stopwatch();
+  int throttledFramesCount = 0;
+
+  void throttle() {
+    stopwatch.start();
+
+    int duration = random.nextInt(30) + 10;
+
+    while (stopwatch.elapsedMilliseconds < duration) {}
+    stopwatch.reset();
+    stopwatch.stop();
+
+    if (throttledFramesCount > 7) {
+      throttledFramesCount = 0;
+      return;
+    }
+
+    throttledFramesCount++;
+
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      throttle();
+    });
+  }
+
+
   late double _width, _height;
   @override
   void initState() {

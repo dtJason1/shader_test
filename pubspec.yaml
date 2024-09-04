@@ -35,7 +35,7 @@ dependencies:
   ditredi: ^2.0.2
   o3d: ^1.1.1
 
-  flutter_opengl: ^0.9.0
+  show_fps: ^1.0.6
 
 
   # The following adds the Cupertino Icons font to your application.

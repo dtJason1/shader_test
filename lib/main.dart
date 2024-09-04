@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'math_shader.dart';
+import 'package:show_fps/show_fps.dart';
 
 void main() {
 
@@ -12,6 +13,7 @@ class myApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -32,7 +34,13 @@ class myApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MathShaderWidget(),
+      home: ShowFPS(
+        alignment: Alignment.topRight,
+        visible: true,
+        showChart: false,
+        borderRadius: BorderRadius.all(Radius.circular(11)),
+        child: MathShaderWidget(),
+      ),
     );
   }
 }
