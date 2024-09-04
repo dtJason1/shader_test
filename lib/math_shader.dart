@@ -86,7 +86,7 @@ class MathShaderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     shader.setFloat(0,800);
-    shader.setFloat(1, 100 );
+    shader.setFloat(1, 800 );
 
     shader.setFloat(2, currentTime.inMicroseconds.toDouble()*0.00011);
     final Paint paint = Paint()..shader = shader;

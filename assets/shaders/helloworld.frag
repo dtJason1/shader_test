@@ -3,49 +3,72 @@ precision mediump float;
 
 uniform vec2 u_resolution; // 화면 해상도
 uniform float u_time;      // 시간
+#define COUNT 10.
+#define COL_BLACK vec3(23,32,38) / 255.0
+
+#define SF 1./min(u_resolution.x,u_resolution.y)
+#define SS(l,s) smoothstep(SF,-SF,l-s)
+#define hue(h) clamp( abs( fract(h + vec4(3,2,1,0)/3.) * 6. - 3.) -1. , 0., 1.)
+
+#define MOD3 vec3(.1031,.11369,.13787)
+
+
+#include <flutter/runtime_effect.glsl>
+
+
 out vec4 fragColor;
 
-
-
-#define S smoothstep
-
-float map(vec3 p) {
-    vec3 n = vec3(0, 1, 0);
-    float k1 = 0.1;
-    float k2 = (sin(p.x * k1) + sin(p.z * k1)) * 0.2;
-    float k3 = (sin(p.y * k1) + sin(p.z * k1)) * 0.2;
-    float w1 = 10.0 - dot(abs(p), normalize(n)) + k2;
-    float w2 = 10.0- dot(abs(p), normalize(n.yzx)) + k3;
-    float s1 = length(mod(p.xy + vec2(sin((p.z + p.x) * 2.0) * 0.3, cos((p.z + p.x) * 1.0) * 0.5), 2.0) - 1.0) - 0.2;
-    float s2 = length(mod(0.5+p.yz + vec2(sin((p.z + p.x) * 2.0) * 0.3, cos((p.z + p.x) * 1.0) * 0.3), 2.0) - 1.0) - 0.2;
-    return min(w1, min(w2, min(s1, s2)));
+vec3 hash33(vec3 p3)
+{
+    p3 = fract(p3 * MOD3);
+    p3 += dot(p3, p3.yxz+19.19);
+    return -1.0 + 2.0 * fract(vec3((p3.x + p3.y)*p3.z, (p3.x+p3.z)*p3.y, (p3.y+p3.z)*p3.x));
 }
 
-vec2 rot(vec2 p, float a) {
-    return vec2(
-    p.x + p.y ,
-    p.x  - p.y );
+float simplex_noise(vec3 p)
+{
+    const float K1 = 0.333333333;
+    const float K2 = 0.166666667;
 
-//    return vec2(
-//    p.x * cos(a) - p.y * sin(a),
-//    p.x * sin(a) + p.y * cos(a));
+    vec3 i = floor(p + (p.x + p.y + p.z) * K1);
+    vec3 d0 = p - (i - (i.x + i.y + i.z) * K2);
+
+    vec3 e = step(vec3(0.0), d0 - d0.yzx);
+    vec3 i1 = e * (1.0 - e.zxy);
+    vec3 i2 = 1.0 - e.zxy * (1.0 - e);
+
+    vec3 d1 = d0 - (i1 - 1.0 * K2);
+    vec3 d2 = d0 - (i2 - 2.0 * K2);
+    vec3 d3 = d0 - (1.0 - 3.0 * K2);
+
+    vec4 h = max(0.6 - vec4(dot(d0, d0), dot(d1, d1), dot(d2, d2), dot(d3, d3)), 0.0);
+    vec4 n = h * h * h * h * vec4(dot(d0, hash33(i)), dot(d1, hash33(i + i1)), dot(d2, hash33(i + i2)), dot(d3, hash33(i + 1.0)));
+
+    return dot(vec4(31.316), n);
 }
 
-void main() {
-    float time = u_time * 0.001;
-    vec2 uv = ( gl_FragCoord.xy / u_resolution.xy ) * 2.0 - 1.0;
-    vec3 dir = normalize(vec3(uv, 1.0));
-    dir.xz = rot(dir.xz, time * 0.23);dir = dir.yzx;
-    dir.xz = rot(dir.xz, time * 0.2);dir = dir.yzx;
-    vec3 pos = vec3(0, 0, time);
-    vec3 col = vec3(0.0);
-    float t = 1.0;
-    float tt = 1.0;
-
-    vec3 ip = pos + dir * t;
 
 
-    fragColor.a = 1.0 / (t * t * t * t);
+void main()
+{
 
-    fragColor = vec4(0.05*t+abs(dir) + max(0.0, map(ip - 0.1) - tt), 1.0);
+    vec2 uv = FlutterFragCoord().xy/u_resolution.xy;
+    uv.x *= u_resolution.x/u_resolution.y;
+
+    float m = 0.;
+    float t = u_time *.5*0.001;
+    vec3 col;
+
+
+    float edge = simplex_noise(vec3(1.,0,0))*.2 + (.5/COUNT)*COUNT + .25;
+
+    m *= SS(edge, uv.y+.015);
+
+    col = hue(0.5).rgb;
+
+
+
+    col = mix(COL_BLACK, col, m);
+
+    fragColor = vec4(col,1.0);
 }
