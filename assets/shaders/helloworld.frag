@@ -3,7 +3,7 @@ precision mediump float;
 
 uniform vec2 u_resolution; // 화면 해상도
 uniform float u_time;      // 시간
-#define COUNT 300.
+#define COUNT 10.
 #define COL_BLACK vec3(23,32,38) / 255.0
 
 #define SF 1./min(u_resolution.x,u_resolution.y)
