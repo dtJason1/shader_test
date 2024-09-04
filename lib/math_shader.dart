@@ -46,7 +46,6 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
 
   @override
   Widget build(BuildContext context){
-    if (_shouldCount) _count++;
 
     return Scaffold(
       body: Padding(
@@ -72,24 +71,24 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
 
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(100, 50,0,0),
-              child: ElevatedButton(
-                onPressed: () {
-                  _shouldCount = true;
-                  _count = 0;
-                  Timer.periodic(Duration(milliseconds: 1),(timer) {
-                    setState(() {
-                      if (timer.tick >= 1000) {
-                        timer.cancel();
-                        _shouldCount = false;
-                      }
-                    });
-                  });
-                },
-                child: Text(_count != 0 ? 'FPS: $_count' : 'START'),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(100, 50,0,0),
+            //   child: ElevatedButton(
+            //     onPressed: () {
+            //       _shouldCount = true;
+            //       _count = 0;
+            //       Timer.periodic(Duration(milliseconds: 1),(timer) {
+            //         setState(() {
+            //           if (timer.tick >= 1000) {
+            //             timer.cancel();
+            //             _shouldCount = false;
+            //           }
+            //         });
+            //       });
+            //     },
+            //     child: Text(_count != 0 ? 'FPS: $_count' : 'START'),
+            //   ),
+            // ),
           ],
         ),
       ),
