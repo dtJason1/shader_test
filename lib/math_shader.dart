@@ -46,6 +46,7 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
 
   @override
   Widget build(BuildContext context){
+    if (_shouldCount) _count++;
 
     return Scaffold(
       body: Padding(
