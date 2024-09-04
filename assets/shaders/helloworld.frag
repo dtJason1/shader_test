@@ -60,9 +60,12 @@ void main()
     vec3 col;
 
 
-    float edge = simplex_noise(vec3(1.,0,0))*.2 + (.5/COUNT)*COUNT + .25;
+    float edge = simplex_noise(vec3(uv * vec2(2., 0.) + vec2(0, t + COUNT*.15), 1.))*.2 + (.5/COUNT)*COUNT + .25;
+    float anotherEdge = simplex_noise(vec3(uv * vec2(2., 0.) + vec2(0, t + COUNT*.15), 1.))*.2 + (.5/COUNT)*COUNT + .25;
 
+    float mi = SS(edge, uv.y) - SS((edge + SS(anotherEdge, uv.y))+0.005, uv.y);
     m *= SS(edge, uv.y+.015);
+    m += mi;
 
     col = hue(0.5).rgb;
 
