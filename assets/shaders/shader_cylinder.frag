@@ -90,7 +90,7 @@ void draw( out vec4 _FragColor, in vec2 vUv )
 
     float a = time * -1.0;
     vec2 pos = vec2(cos(a), sin(a)) * r0;
-    d = 5; //distance(uv, pos);
+    d = distance(uv, pos);
     v1 = light2(1.5, 5.0, d);
     v1 *= light1(1.0, 50.0 , d0);
 
