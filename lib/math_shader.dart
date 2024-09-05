@@ -100,51 +100,51 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
 
                   ],
                 ),
-                Column(
-                  children: [
-                    SizedBox(
-                      width: 400,
-                      height:400,
-
-                      child: ShaderBuilder(
-                        assetKey: 'assets/shaders/shader_cylinder.frag',
-                            (BuildContext context, FragmentShader shader, _) => CustomPaint(
-                          size: MediaQuery.of(context).size,
-                          painter: MathShaderPainter(shader, _currentTime),
-                          // painter: MathCustomPainter(_currentTime),
-                        ),
-
-                        child: Column(
-                          children: [
-                            Text("hello world", style: TextStyle(color: Colors.red),),
-                          ],
-                        ),
-
-                      ),
-                    ),
-                    SizedBox(
-                      width: 400,
-                      height:400,
-
-                      child: ShaderBuilder(
-                        assetKey: 'assets/shaders/shader_cylinder.frag',
-                            (BuildContext context, FragmentShader shader, _) => CustomPaint(
-                          size: MediaQuery.of(context).size,
-                          painter: MathShaderPainter(shader, _currentTime),
-                          // painter: MathCustomPainter(_currentTime),
-                        ),
-
-                        child: Column(
-                          children: [
-                            Text("hello world", style: TextStyle(color: Colors.red),),
-                          ],
-                        ),
-
-                      ),
-                    ),
-
-                  ],
-                ),
+                // Column(
+                //   children: [
+                //     SizedBox(
+                //       width: 400,
+                //       height:400,
+                //
+                //       child: ShaderBuilder(
+                //         assetKey: 'assets/shaders/shader_cylinder.frag',
+                //             (BuildContext context, FragmentShader shader, _) => CustomPaint(
+                //           size: MediaQuery.of(context).size,
+                //           painter: MathShaderPainter(shader, _currentTime),
+                //           // painter: MathCustomPainter(_currentTime),
+                //         ),
+                //
+                //         child: Column(
+                //           children: [
+                //             Text("hello world", style: TextStyle(color: Colors.red),),
+                //           ],
+                //         ),
+                //
+                //       ),
+                //     ),
+                //     SizedBox(
+                //       width: 400,
+                //       height:400,
+                //
+                //       child: ShaderBuilder(
+                //         assetKey: 'assets/shaders/shader_cylinder.frag',
+                //             (BuildContext context, FragmentShader shader, _) => CustomPaint(
+                //           size: MediaQuery.of(context).size,
+                //           painter: MathShaderPainter(shader, _currentTime),
+                //           // painter: MathCustomPainter(_currentTime),
+                //         ),
+                //
+                //         child: Column(
+                //           children: [
+                //             Text("hello world", style: TextStyle(color: Colors.red),),
+                //           ],
+                //         ),
+                //
+                //       ),
+                //     ),
+                //
+                //   ],
+                // ),
 
               ],
             ),
