@@ -86,7 +86,7 @@ void draw( out vec4 _FragColor, in vec2 vUv )
     d0 = distance(uv, r0 / len * uv);
     v0 = light1(1.0, 10.0, d0);
     v0 *= smoothstep(r0 * 1.05, r0, len);
-    cl = cos(ang + 1 * 2.0) * 0.5 + 0.5;
+    cl = cos(ang + time * 2.0) * 0.5 + 0.5;
 
     // high light
     float a = time * -1.0;
@@ -102,8 +102,8 @@ void draw( out vec4 _FragColor, in vec2 vUv )
     v3 = smoothstep(innerRadius, mix(innerRadius, 1.0, 0.5), len);
 
     // color
-    vec3 c = mix(color1, color2, cl);
-    vec3 col = mix(color1, color2, cl);
+    vec3 c = mix(color1, color2, 1);
+    vec3 col = mix(color1, color2, 1);
     col = mix(color3, col, v0);
     col = (col + v1) * v2 * v3;
     col.rgb = clamp(col.rgb, 0.0, 1.0);
