@@ -54,8 +54,8 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
         child: Stack(
           children: [
             SizedBox(
-              width: 800,
-              height:800,
+              width: 400,
+              height:400,
               child: ShaderBuilder(
                 assetKey: 'assets/shaders/shader_cylinder.frag',
                     (BuildContext context, FragmentShader shader, _) => CustomPaint(
