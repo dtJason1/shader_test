@@ -59,8 +59,8 @@ vec4 extractAlpha(vec3 colorIn)
 const vec3 color1 = vec3(0.611765, 0.262745, 0.996078);
 const vec3 color2 = vec3(0.298039, 0.760784, 0.913725);
 const vec3 color3 = vec3(0.062745, 0.078431, 0.600000);
-const float innerRadius = 0.1;
-const float noiseScale = 0.01;
+const float innerRadius = 0.00011;
+const float noiseScale = 0.000001;
 
 float light1(float intensity, float attenuation, float dist)
 {
@@ -82,7 +82,7 @@ void draw( out vec4 _FragColor, in vec2 vUv )
 
     // ring
     n0 = snoise3( vec3(uv * noiseScale,  0.5) ) * 0.5 + 0.5;
-    r0 = mix(mix(innerRadius, 1.0, 0.4), mix(innerRadius, 1.0, 0.6), n0);
+    r0 = mix(mix(innerRadius, 1.0, 0.001), mix(innerRadius, 1.0, 0.001), n0);
     d0 = distance(uv, r0 / len * uv);
     v0 = light1(1.0, 10.0, d0);
     v0 *= smoothstep(r0 * 1.05, r0, len);
