@@ -73,7 +73,8 @@ float light2(float intensity, float attenuation, float dist)
 
 void draw( out vec4 _FragColor, in vec2 vUv )
 {
-
+    vUv.x +=0.5;
+    vUv.y +=0.5;
     vec2 uv = vUv;
     float ang = atan(uv.y, uv.x);
     float len = length(uv);
@@ -83,7 +84,7 @@ void draw( out vec4 _FragColor, in vec2 vUv )
 
     // ring
     n0 = snoise3( vec3(uv * noiseScale,  0.5) ) * 0.5 + 0.5;
-    r0 = mix(mix(innerRadius, 1.0, 0.2), mix(innerRadius, 1.0, 0.3), n0);
+    r0 = mix(mix(innerRadius, 1.0, 0.4), mix(innerRadius, 1.0, 0.6), n0);
     d0 = distance(uv, r0 / len * uv);
     v0 = light1(1.0, 10.0, d0);
     v0 *= smoothstep(r0 * 1.05, r0, len);
