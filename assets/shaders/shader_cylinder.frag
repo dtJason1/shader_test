@@ -86,7 +86,7 @@ void draw( out vec4 _FragColor, in vec2 vUv )
     d0 = distance(uv, r0 / len * uv);
     v0 = light1(1.0, 10.0, d0);
     v0 *= smoothstep(r0 * 1.05, r0, len);
-    cl = cos(ang + time * 2.0) * 0.5 + 0.5;
+    cl = cos(ang + 1 * 2.0) * 0.5 + 0.5;
 
     // high light
     float a = time * -1.0;
