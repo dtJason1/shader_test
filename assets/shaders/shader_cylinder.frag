@@ -83,23 +83,27 @@ void draw( out vec4 _FragColor, in vec2 vUv )
     // ring
     n0 = snoise3( vec3(uv * noiseScale, time * 0.5) ) * 0.5 + 0.5;
     r0 = mix(mix(innerRadius, 1.0, 0.4), mix(innerRadius, 1.0, 0.6), n0);
-    d0 =  distance(uv, r0 / len * uv);
+    d0 = distance(uv, r0 / len * uv);
     v0 = light1(1.0, 10.0, d0);
     v0 *= smoothstep(r0 * 1.05, r0, len);
     cl = cos(ang + time * 2.0) * 0.5 + 0.5;
 
+    // high light
     float a = time * -1.0;
     vec2 pos = vec2(cos(a), sin(a)) * r0;
     d = distance(uv, pos);
     v1 = light2(1.5, 5.0, d);
     v1 *= light1(1.0, 50.0 , d0);
 
+    // back decay
     v2 = smoothstep(1.0, mix(innerRadius, 1.0, n0 * 0.5), len);
 
+    // hole
     v3 = smoothstep(innerRadius, mix(innerRadius, 1.0, 0.5), len);
 
-    vec3 c = mix(color1, color2, 1);
-    vec3 col = mix(color1, color2, 1);
+    // color
+    vec3 c = mix(color1, color2, cl);
+    vec3 col = mix(color1, color2, cl);
     col = mix(color3, col, v0);
     col = (col + v1) * v2 * v3;
     col.rgb = clamp(col.rgb, 0.0, 1.0);
