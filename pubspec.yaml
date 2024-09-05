@@ -65,7 +65,7 @@ flutter:
   shaders:
     - assets/shaders/helloworld.frag
     - assets/shaders/shader_cylinder.frag
-    - - assets/shaders/circle_shader.frag
+    - assets/shaders/circle_shader.frag
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
