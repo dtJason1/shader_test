@@ -53,25 +53,100 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
         padding: const EdgeInsets.fromLTRB(70,0,0,0),
         child: Stack(
           children: [
-            SizedBox(
-              width: 400,
-              height:400,
-
-              child: ShaderBuilder(
-                assetKey: 'assets/shaders/shader_cylinder.frag',
-                    (BuildContext context, FragmentShader shader, _) => CustomPaint(
-                  size: MediaQuery.of(context).size,
-                  painter: MathShaderPainter(shader, _currentTime),
-                  // painter: MathCustomPainter(_currentTime),
-                ),
-
-                child: Column(
+            Row(
+              children: [
+                Column(
                   children: [
-                    Text("hello world", style: TextStyle(color: Colors.red),),
+                    SizedBox(
+                      width: 400,
+                      height:400,
+
+                      child: ShaderBuilder(
+                        assetKey: 'assets/shaders/shader_cylinder.frag',
+                            (BuildContext context, FragmentShader shader, _) => CustomPaint(
+                          size: MediaQuery.of(context).size,
+                          painter: MathShaderPainter(shader, _currentTime),
+                          // painter: MathCustomPainter(_currentTime),
+                        ),
+
+                        child: Column(
+                          children: [
+                            Text("hello world", style: TextStyle(color: Colors.red),),
+                          ],
+                        ),
+
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400,
+                      height:400,
+
+                      child: ShaderBuilder(
+                        assetKey: 'assets/shaders/shader_cylinder.frag',
+                            (BuildContext context, FragmentShader shader, _) => CustomPaint(
+                          size: MediaQuery.of(context).size,
+                          painter: MathShaderPainter(shader, _currentTime),
+                          // painter: MathCustomPainter(_currentTime),
+                        ),
+
+                        child: Column(
+                          children: [
+                            Text("hello world", style: TextStyle(color: Colors.red),),
+                          ],
+                        ),
+
+                      ),
+                    ),
+
+                  ],
+                ),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: 400,
+                      height:400,
+
+                      child: ShaderBuilder(
+                        assetKey: 'assets/shaders/shader_cylinder.frag',
+                            (BuildContext context, FragmentShader shader, _) => CustomPaint(
+                          size: MediaQuery.of(context).size,
+                          painter: MathShaderPainter(shader, _currentTime),
+                          // painter: MathCustomPainter(_currentTime),
+                        ),
+
+                        child: Column(
+                          children: [
+                            Text("hello world", style: TextStyle(color: Colors.red),),
+                          ],
+                        ),
+
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400,
+                      height:400,
+
+                      child: ShaderBuilder(
+                        assetKey: 'assets/shaders/shader_cylinder.frag',
+                            (BuildContext context, FragmentShader shader, _) => CustomPaint(
+                          size: MediaQuery.of(context).size,
+                          painter: MathShaderPainter(shader, _currentTime),
+                          // painter: MathCustomPainter(_currentTime),
+                        ),
+
+                        child: Column(
+                          children: [
+                            Text("hello world", style: TextStyle(color: Colors.red),),
+                          ],
+                        ),
+
+                      ),
+                    ),
+
                   ],
                 ),
 
-              ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(100, 50,0,0),
