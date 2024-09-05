@@ -120,8 +120,8 @@ void draw( out vec4 _FragColor, in vec2 vUv )
 void main()
 {
 
-    vec2 uv = (FlutterFragCoord()*2.-u_resolution.xy)/u_resolution.y;
-    if(uv.y > 0.1 || uv.x >0.1){
+    vec2 uv = (FlutterFragCoord()*2-u_resolution.xy)/u_resolution.xy;
+    if(uv.x > 0.4){
         fragColor = vec4(0,0,0,1);
 
 
