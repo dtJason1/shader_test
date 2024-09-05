@@ -83,7 +83,7 @@ void draw( out vec4 _FragColor, in vec2 vUv )
     // ring
     n0 = snoise3( vec3(uv * noiseScale, time * 0.5) ) * 0.5 + 0.5;
     r0 = mix(mix(innerRadius, 1.0, 0.4), mix(innerRadius, 1.0, 0.6), n0);
-    d0 = 5; // distance(uv, r0 / len * uv);
+    d0 =  distance(uv, r0 / len * uv);
     v0 = light1(1.0, 10.0, d0);
     v0 *= smoothstep(r0 * 1.05, r0, len);
     cl = cos(ang + time * 2.0) * 0.5 + 0.5;
