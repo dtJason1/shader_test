@@ -58,27 +58,23 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
               child: InteractiveViewer(
 
                 child: Container(
-                  child: Transform.scale(
-                    scaleX: 10.0,
-                    scaleY: 10.0,
-                    child: SizedBox(
-                      width: 400,
-                      height:400,
-                      child: ShaderBuilder(
-                        assetKey: 'assets/shaders/shader_cylinder.frag',
-                            (BuildContext context, FragmentShader shader, _) => CustomPaint(
-                          size: Size(400,400),
-                          painter: MathShaderPainter(shader, _currentTime),
-                          // painter: MathCustomPainter(_currentTime),
-                        ),
-
-                        child: Column(
-                          children: [
-                            Text("hello world", style: TextStyle(color: Colors.red),),
-                          ],
-                        ),
-
+                  child: SizedBox(
+                    width: 800,
+                    height:800,
+                    child: ShaderBuilder(
+                      assetKey: 'assets/shaders/helloworld.frag',
+                          (BuildContext context, FragmentShader shader, _) => CustomPaint(
+                        size: Size(800,800),
+                        painter: MathShaderPainter(shader, _currentTime),
+                        // painter: MathCustomPainter(_currentTime),
                       ),
+
+                      child: Column(
+                        children: [
+                          Text("hello world", style: TextStyle(color: Colors.red),),
+                        ],
+                      ),
+
                     ),
                   ),
                 ),
@@ -120,8 +116,8 @@ class MathShaderPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    shader.setFloat(0,400);
-    shader.setFloat(1,400 );
+    shader.setFloat(0,800);
+    shader.setFloat(1,800 );
 
     shader.setFloat(2, currentTime.inMicroseconds.toDouble()*0.00011);
     final Paint paint = Paint()..shader = shader;
