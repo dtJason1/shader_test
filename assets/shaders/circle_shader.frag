@@ -61,7 +61,8 @@ const vec3 color3 = vec3(0.062745, 0.078431, 0.600000);
 const float innerRadius = 0.00011;
 const float noiseScale = 0.01;
 
-float light1(float intensity, float attenuation, float dist){
+float light1(float intensity, float attenuation, float dist)
+{
     return intensity / (1.0 + dist * attenuation);
 }
 float light2(float intensity, float attenuation, float dist)
@@ -71,7 +72,8 @@ float light2(float intensity, float attenuation, float dist)
 
 void draw( out vec4 _FragColor, in vec2 vUv )
 {
-
+    vUv.x +=0.5;
+    vUv.y +=0.5;
     vec2 uv = vUv;
     float ang = atan(uv.y, uv.x);
     float len = length(uv);
@@ -115,15 +117,25 @@ void draw( out vec4 _FragColor, in vec2 vUv )
 }
 
 
-void main(){
-    vec2 uv = (FlutterFragCoord()-u_resolution.xy)/u_resolution.y/2;
+void main()
+{
 
-    vec4 col;
-    draw(col, uv);
-    vec3 bg = BG_COLOR;
-    vec4 myvec4 = vec4(mix(bg, col.rgb, col.a), 1.0);
-    fragColor = myvec4;
+    vec2 uv = (FlutterFragCoord()*2.-u_resolution.xy)/u_resolution.y;
+    if(uv.y < 0.1){
+        fragColor = vec4(0,0,0,1);
+
+
+    }
+    else{
+        vec4 col;
+        vec4 myvec4;
+        draw(col, uv);
+        vec3 bg = BG_COLOR;
+        myvec4 = vec4(mix(bg, col.rgb, col.a),1.0);
+
+        fragColor = myvec4;
+    }
+
 
 
 }
-
