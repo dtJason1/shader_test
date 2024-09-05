@@ -59,12 +59,12 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
 
                 child: Container(
                   child: SizedBox(
-                    width: 800,
-                    height:800,
+                    width: 1600,
+                    height:1600,
                     child: ShaderBuilder(
                       assetKey: 'assets/shaders/circle_shader.frag',
                           (BuildContext context, FragmentShader shader, _) => CustomPaint(
-                        size: Size(800,800),
+                        size: Size(1600,1600),
                         painter: MathShaderPainter(shader, _currentTime),
                         // painter: MathCustomPainter(_currentTime),
                       ),
