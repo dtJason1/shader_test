@@ -121,6 +121,7 @@ void main()
 {
     vec2 uv = (FlutterFragCoord()*2.-u_resolution.xy)/u_resolution.y;
     if(uv.x > 0.5 ){
+        myvec4 = vec4(0,0,0,1.0);
 
     }
     else{
