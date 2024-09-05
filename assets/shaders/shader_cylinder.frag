@@ -60,7 +60,7 @@ const vec3 color1 = vec3(0.611765, 0.262745, 0.996078);
 const vec3 color2 = vec3(0.298039, 0.760784, 0.913725);
 const vec3 color3 = vec3(0.062745, 0.078431, 0.600000);
 const float innerRadius = 0.1;
-const float noiseScale = 0.65;
+const float noiseScale = 0.01;
 
 float light1(float intensity, float attenuation, float dist)
 {
