@@ -53,100 +53,24 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
         padding: const EdgeInsets.fromLTRB(70,0,0,0),
         child: Stack(
           children: [
-            Row(
-              children: [
-                Column(
+            SizedBox(
+              width: 400,
+              height:400,
+              child: ShaderBuilder(
+                assetKey: 'assets/shaders/shader_cylinder.frag',
+                    (BuildContext context, FragmentShader shader, _) => CustomPaint(
+                  size: MediaQuery.of(context).size,
+                  painter: MathShaderPainter(shader, _currentTime),
+                  // painter: MathCustomPainter(_currentTime),
+                ),
+
+                child: Column(
                   children: [
-                    SizedBox(
-                      width: 400,
-                      height:400,
-
-                      child: ShaderBuilder(
-                        assetKey: 'assets/shaders/shader_cylinder.frag',
-                            (BuildContext context, FragmentShader shader, _) => CustomPaint(
-                          size: MediaQuery.of(context).size,
-                          painter: MathShaderPainter(shader, _currentTime),
-                          // painter: MathCustomPainter(_currentTime),
-                        ),
-
-                        child: Column(
-                          children: [
-                            Text("hello world", style: TextStyle(color: Colors.red),),
-                          ],
-                        ),
-
-                      ),
-                    ),
-                    SizedBox(
-                      width: 400,
-                      height:400,
-
-                      child: ShaderBuilder(
-                        assetKey: 'assets/shaders/shader_cylinder.frag',
-                            (BuildContext context, FragmentShader shader, _) => CustomPaint(
-                          size: MediaQuery.of(context).size,
-                          painter: MathShaderPainter(shader, _currentTime),
-                          // painter: MathCustomPainter(_currentTime),
-                        ),
-
-                        child: Column(
-                          children: [
-                            Text("hello world", style: TextStyle(color: Colors.red),),
-                          ],
-                        ),
-
-                      ),
-                    ),
-
+                    Text("hello world", style: TextStyle(color: Colors.red),),
                   ],
                 ),
-                // Column(
-                //   children: [
-                //     SizedBox(
-                //       width: 400,
-                //       height:400,
-                //
-                //       child: ShaderBuilder(
-                //         assetKey: 'assets/shaders/shader_cylinder.frag',
-                //             (BuildContext context, FragmentShader shader, _) => CustomPaint(
-                //           size: MediaQuery.of(context).size,
-                //           painter: MathShaderPainter(shader, _currentTime),
-                //           // painter: MathCustomPainter(_currentTime),
-                //         ),
-                //
-                //         child: Column(
-                //           children: [
-                //             Text("hello world", style: TextStyle(color: Colors.red),),
-                //           ],
-                //         ),
-                //
-                //       ),
-                //     ),
-                //     SizedBox(
-                //       width: 400,
-                //       height:400,
-                //
-                //       child: ShaderBuilder(
-                //         assetKey: 'assets/shaders/shader_cylinder.frag',
-                //             (BuildContext context, FragmentShader shader, _) => CustomPaint(
-                //           size: MediaQuery.of(context).size,
-                //           painter: MathShaderPainter(shader, _currentTime),
-                //           // painter: MathCustomPainter(_currentTime),
-                //         ),
-                //
-                //         child: Column(
-                //           children: [
-                //             Text("hello world", style: TextStyle(color: Colors.red),),
-                //           ],
-                //         ),
-                //
-                //       ),
-                //     ),
-                //
-                //   ],
-                // ),
 
-              ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(100, 50,0,0),
@@ -184,8 +108,8 @@ class MathShaderPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    shader.setFloat(0,800);
-    shader.setFloat(1, 800 );
+    shader.setFloat(0,400);
+    shader.setFloat(1, 400 );
 
     shader.setFloat(2, currentTime.inMicroseconds.toDouble()*0.00011);
     final Paint paint = Paint()..shader = shader;
