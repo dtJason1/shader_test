@@ -81,7 +81,7 @@ void draw( out vec4 _FragColor, in vec2 vUv )
     float r, d;
 
     // ring
-    n0 = snoise3( vec3(uv * noiseScale, time * 0.5) ) * 0.5 + 0.5;
+    n0 = snoise3( vec3(uv * noiseScale,  0.5) ) * 0.5 + 0.5;
     r0 = mix(mix(innerRadius, 1.0, 0.4), mix(innerRadius, 1.0, 0.6), n0);
     d0 = distance(uv, r0 / len * uv);
     v0 = light1(1.0, 10.0, d0);
@@ -102,8 +102,8 @@ void draw( out vec4 _FragColor, in vec2 vUv )
     v3 = smoothstep(innerRadius, mix(innerRadius, 1.0, 0.5), len);
 
     // color
-    vec3 c = mix(color1, color2, 1);
-    vec3 col = mix(color1, color2, 1);
+    vec3 c = mix(color1, color2, cl);
+    vec3 col = mix(color1, color2, cl);
     col = mix(color3, col, v0);
     col = (col + v1) * v2 * v3;
     col.rgb = clamp(col.rgb, 0.0, 1.0);
