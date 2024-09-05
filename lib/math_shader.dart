@@ -61,8 +61,8 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
               alignment: Alignment.center,
               child: Container(
                 child: SizedBox(
-                  width: 650,
-                  height:650,
+                  width: 500,
+                  height:500,
                   child: ShaderBuilder(
                     assetKey: 'assets/shaders/circle_shader.frag',
                         (BuildContext context, FragmentShader shader, _) => CustomPaint(
