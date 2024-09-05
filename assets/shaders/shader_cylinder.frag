@@ -73,6 +73,8 @@ float light2(float intensity, float attenuation, float dist)
 
 void draw( out vec4 _FragColor, in vec2 vUv )
 {
+    vUv.x +=0.5;
+    vUv.y +=0.5;
     vec2 uv = vUv;
     float ang = atan(uv.y, uv.x);
     float len = length(uv);
@@ -86,7 +88,7 @@ void draw( out vec4 _FragColor, in vec2 vUv )
     d0 = distance(uv, r0 / len * uv);
     v0 = light1(1.0, 10.0, d0);
     v0 *= smoothstep(r0 * 1.05, r0, len);
-    cl = cos(ang + time * 2.0) * 0.5 + 0.5;
+    cl = cos(ang + time * 2.0) * 0.5;
 
     // high light
     float a = time * -1.0;
@@ -103,9 +105,13 @@ void draw( out vec4 _FragColor, in vec2 vUv )
 
     // color
     vec3 c = mix(color1, color2, cl);
+
+
     vec3 col = mix(color1, color2, cl);
     col = mix(color3, col, v0);
     col = (col + v1) * v2 * v3;
+
+
     col.rgb = clamp(col.rgb, 0.0, 1.0);
 
     _FragColor = extractAlpha(col);
@@ -116,8 +122,11 @@ void main()
 {
     vec2 uv = (FlutterFragCoord()*2.-u_resolution.xy)/u_resolution.y;
     vec4 col;
+    vec4 myvec4;
     draw(col, uv);
     vec3 bg = BG_COLOR;
-    fragColor = vec4(mix(bg, col.rgb, col.a),1.0);
+    myvec4 = vec4(mix(bg, col.rgb, col.a),1.0);
+
+    fragColor = myvec4;
 
 }
