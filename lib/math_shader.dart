@@ -54,8 +54,8 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
         child: Stack(
           children: [
             SizedBox(
-              width: 400,
-              height:400,
+              width: 800,
+              height:800,
               child: ShaderBuilder(
                 assetKey: 'assets/shaders/shader_cylinder.frag',
                     (BuildContext context, FragmentShader shader, _) => CustomPaint(
@@ -109,7 +109,7 @@ class MathShaderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     shader.setFloat(0,400);
-    shader.setFloat(1, 400 );
+    shader.setFloat(1,400 );
 
     shader.setFloat(2, currentTime.inMicroseconds.toDouble()*0.00011);
     final Paint paint = Paint()..shader = shader;
