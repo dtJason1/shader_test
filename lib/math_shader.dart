@@ -55,27 +55,28 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
         child: Stack(
           children: [
             Container(
-              child: InteractiveViewer(
-
-                child: Container(
-                  child: SizedBox(
-                    width: 800,
-                    height:800,
-                    child: ShaderBuilder(
-                      assetKey: 'assets/shaders/circle_shader.frag',
-                          (BuildContext context, FragmentShader shader, _) => CustomPaint(
-                        size: Size(1600,1600),
-                        painter: MathShaderPainter(shader, _currentTime),
-                        // painter: MathCustomPainter(_currentTime),
-                      ),
-
-                      child: Column(
-                        children: [
-                          Text("hello world", style: TextStyle(color: Colors.red),),
-                        ],
-                      ),
-
+              width: 800,
+              height: 800,
+              color: Colors.black,
+              alignment: Alignment.center,
+              child: Container(
+                child: SizedBox(
+                  width: 650,
+                  height:650,
+                  child: ShaderBuilder(
+                    assetKey: 'assets/shaders/circle_shader.frag',
+                        (BuildContext context, FragmentShader shader, _) => CustomPaint(
+                      size: Size(800,800),
+                      painter: MathShaderPainter(shader, _currentTime),
+                      // painter: MathCustomPainter(_currentTime),
                     ),
+
+                    child: Column(
+                      children: [
+                        Text("hello world", style: TextStyle(color: Colors.red),),
+                      ],
+                    ),
+
                   ),
                 ),
               ),

@@ -72,8 +72,9 @@ float light2(float intensity, float attenuation, float dist)
 
 void draw( out vec4 _FragColor, in vec2 vUv )
 {
-    vUv.x +=0.5;
-    vUv.y +=0.5;
+
+    vUv.x +=0.2;
+    vUv.y +=0.2;
     vec2 uv = vUv;
     float ang = atan(uv.y, uv.x);
     float len = length(uv);
@@ -121,20 +122,13 @@ void main()
 {
 
     vec2 uv = (FlutterFragCoord()*2-u_resolution.xy)/u_resolution.xy;
-    if(uv.x > 0.4){
-        fragColor = vec4(0,0,0,1);
+    vec4 col;
+    vec4 myvec4;
+    draw(col, uv);
+    vec3 bg = BG_COLOR;
+    myvec4 = vec4(mix(bg, col.rgb, col.a),1.0);
 
-
-    }
-    else{
-        vec4 col;
-        vec4 myvec4;
-        draw(col, uv);
-        vec3 bg = BG_COLOR;
-        myvec4 = vec4(mix(bg, col.rgb, col.a),1.0);
-
-        fragColor = myvec4;
-    }
+    fragColor = myvec4;
 
 
 
