@@ -60,7 +60,7 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
               child: ShaderBuilder(
                 assetKey: 'assets/shaders/shader_cylinder.frag',
                     (BuildContext context, FragmentShader shader, _) => CustomPaint(
-                  size: MediaQuery.of(context).size,
+                  size: Size(200,200),
                   painter: MathShaderPainter(shader, _currentTime),
                   // painter: MathCustomPainter(_currentTime),
                 ),
