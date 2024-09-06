@@ -41,22 +41,15 @@ vec4 extractAlpha(vec3 colorIn)
 {
     vec4 colorOut;
     float maxValue = min(max(max(colorIn.r, colorIn.g), colorIn.b), 1.0);
-    if (maxValue > 1e-5)
-    {
-        colorOut.rgb = colorIn.rgb * (1.0 / maxValue);
-        colorOut.a = maxValue;
-    }
-    else
-    {
-        colorOut = vec4(0.0);
-    }
+    colorOut.rgb = 0.5 + 0.5*cos(u_time*0.001+vec3(0,2,4));
+    colorOut.a = maxValue;
     return colorOut;
 }
 
 #define BG_COLOR (vec3(0,0,0))
 #define time u_time*0.01
 const vec3 color1 = vec3(0.0, 0.0, 0.0);
-const vec3 color2 =  vec3(0.0, 0.0, 0.0);
+const vec3 color2 =  vec3(1.0, 0.0, 0.0);
 const vec3 color3 =  vec3(0.0, 0.0, 0.0);
 const float noiseScale = 0.01;
 
@@ -89,10 +82,10 @@ float light1(float intensity, float attenuation, float dist)
 {
     return intensity / (1.0 + dist * attenuation);
 }
-float light2(float intensity, float attenuation, float dist)
-{
-    return intensity / (1.0 + dist * dist * attenuation);
-}
+
+// clamp  0~1 밀도가 높은 곳에서 더 크게 색깔이 변하는
+
+
 void draw( out vec4 _FragColor, in vec2 vUv )
 {
     float px = 1.0/u_resolution.y;
@@ -113,22 +106,21 @@ void draw( out vec4 _FragColor, in vec2 vUv )
     // ring
     n0 = snoise3( vec3(uv * noiseScale,  0.5) ) * 0.5 + 0.5;
     d0 = distance(uv, vec2(uv.x,min(y,any) -0.5));
-    float d1 = distance(uv, vec2(uv.x,max(y,any) -0.5));
+    float d1 = distance(uv, vec2(uv.x , max(y,any) -0.5));
 
     vec2 pos = vec2(uv.x,min(y,any));
 
 
 
-    v1 = light1(1.0, 150.0 , d0);
-     v2 = light2(1.0,150.0, d1);
+     v1 = light1(1.0, 50.0 , d0);
+     v2 = light1(1.0,50.0, d1);
 
-
-    // color
-    vec3 c = mix(color1, color2, cl);
 
 
     vec3 col = mix(color1, color2, cl);
-    col = (col + v1 +v2);
+
+    col = (col  + v1 );
+    col = (col  + v2 );
 
 
     col.rgb = clamp(col.rgb, 0.0, 1.0);
