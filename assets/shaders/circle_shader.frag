@@ -120,7 +120,6 @@ void draw( out vec4 _FragColor, in vec2 vUv )
 
 void main()
 {
-    vec2 uv = FlutterFragCoord().xy/u_resolution.xy;
 
 
     vec2 uv = (FlutterFragCoord()*2-u_resolution.xy)/u_resolution.xy;
