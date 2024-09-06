@@ -73,8 +73,7 @@ float light2(float intensity, float attenuation, float dist)
 void draw( out vec4 _FragColor, in vec2 vUv )
 {
 
-    vUv.x +=0.35;
-    vUv.y +=0.35;
+
     vec2 uv = vUv;
     float ang = 0.2;
     float len = length(uv);
