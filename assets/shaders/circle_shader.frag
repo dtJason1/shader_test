@@ -75,6 +75,7 @@ void draw( out vec4 _FragColor, in vec2 vUv )
 
 
     vec2 uv = vUv;
+
     float ang = 0.2;
     float len = length(uv);
     float v0, v1, v2, v3, cl;
@@ -119,8 +120,12 @@ void draw( out vec4 _FragColor, in vec2 vUv )
 
 void main()
 {
+    vec2 uv = FlutterFragCoord().xy/u_resolution.xy;
+
 
     vec2 uv = (FlutterFragCoord()*2-u_resolution.xy)/u_resolution.xy;
+    uv.x -=0.24;
+    uv.y -=0.03;
     vec4 col;
     vec4 myvec4;
     draw(col, uv);
