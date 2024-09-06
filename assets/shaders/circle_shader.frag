@@ -119,15 +119,22 @@ void draw( out vec4 _FragColor, in vec2 vUv )
 
 void main()
 {
+    vec2 uv = FlutterFragCoord().xy/u_resolution.xy;
+    if(uv.x<0.03 || uv.x>0.95 || uv.y <0.05 || uv.y  >0.95){
+        fragColor = vec4(0,0,0,1.0);
+    }
+    else{
 
-    vec2 uv = (FlutterFragCoord()*2-u_resolution.xy)/u_resolution.xy;
-    vec4 col;
-    vec4 myvec4;
-    draw(col, uv);
-    vec3 bg = BG_COLOR;
-    myvec4 = vec4(mix(bg, col.rgb, col.a),1.0);
+        vec2 uv = (FlutterFragCoord()*2-u_resolution.xy)/u_resolution.xy;
+        vec4 col;
+        vec4 myvec4;
+        draw(col, uv);
+        vec3 bg = BG_COLOR;
+        myvec4 = vec4(mix(bg, col.rgb, col.a),1.0);
 
-    fragColor = myvec4;
+        fragColor = myvec4;
+    }
+
 
 
 
