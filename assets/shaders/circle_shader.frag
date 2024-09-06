@@ -76,7 +76,7 @@ void draw( out vec4 _FragColor, in vec2 vUv )
     vUv.x +=0.35;
     vUv.y +=0.35;
     vec2 uv = vUv;
-    float ang = atan(uv.y, uv.x);
+    float ang = 0.2;
     float len = length(uv);
     float v0, v1, v2, v3, cl;
     float r0, d0, n0;
