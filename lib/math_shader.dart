@@ -61,7 +61,7 @@ class _MathShaderWidgetState extends State<MathShaderWidget> with SingleTickerPr
               alignment: Alignment.center,
               child: Container(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(24,40,40,40),
+                  padding: const EdgeInsets.fromLTRB(24,40,40,0),
                   child: SizedBox(
                     width: 800,
                     height:800,

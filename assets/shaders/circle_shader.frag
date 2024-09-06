@@ -123,6 +123,7 @@ void main()
 
 
     vec2 uv = (FlutterFragCoord()*2-u_resolution.xy)/u_resolution.xy;
+
     uv.x += 0.03;
     uv.y +=0.05;
     vec4 col;
